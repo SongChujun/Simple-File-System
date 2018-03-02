@@ -27,15 +27,15 @@ void FuncDir(const char*);
 void FuncTouch(const char*);
 void FuncRm(const char*);
 void FuncCreat(const char*);
-int FuncOpen(const char*);
+int FuncOpen(const char*,int mode);
 void FuncClose(const char*);
 void FuncRead(const char*);
 void FuncWrite(const char*);
-void creat(const char *);
-int open(const char *);
-void close(int);
+void creat(char *);
+int open(char *, int);
+int close(int);
 int read(int,char *,int);
-int write(int ,char*,int);
+int write(int ,void *,int);
 struct  TreeNode
 {
     int type;//the type of the node,0 stands for file and 1 stands for directory
@@ -44,6 +44,8 @@ struct  TreeNode
     int ChildNum;//the number of children;
     char name[16];//the name of the node;
     int inodenum;//the number of the inode;
+    int filedescriptor;
+    int statue;
 };
 struct TreeNode *root;
 struct TreeNode *globalcurnode;
@@ -85,8 +87,18 @@ struct systemopenfilesheet
     int rwflag;
     int refcount;
     struct activeinode* ptrtoactiveinode;
+    struct  TreeNode* ptrtotreenode;
     int offset;
 };
 struct systemopenfilesheet* u_ofile[100];
 void formalizecmdline(char *);
 void chararrayclear(char *, int);
+void intarrayclear(int * intarray,int len);
+int* allocblocks();
+struct freeblock
+{
+    int num;
+    int s_free[127];
+};
+struct freeblock immemblock;
+void init();

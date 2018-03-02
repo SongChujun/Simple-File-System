@@ -39,3 +39,10 @@ void chararrayclear(char * chararray,int len)
         chararray[i]='\0';
     }
 }
+void intarrayclear(int * intarray,int len)
+{
+    for(int i=0;i<len;i++)
+    {
+        intarray[i]=-1;
+    }
+}

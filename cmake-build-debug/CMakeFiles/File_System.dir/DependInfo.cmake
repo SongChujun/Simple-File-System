@@ -5,6 +5,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
   "/home/song/Desktop/File System/InterfaceFunc.c" "/home/song/Desktop/File System/cmake-build-debug/CMakeFiles/File_System.dir/InterfaceFunc.c.o"
+  "/home/song/Desktop/File System/grouplinkmethod.c" "/home/song/Desktop/File System/cmake-build-debug/CMakeFiles/File_System.dir/grouplinkmethod.c.o"
   "/home/song/Desktop/File System/main.c" "/home/song/Desktop/File System/cmake-build-debug/CMakeFiles/File_System.dir/main.c.o"
   "/home/song/Desktop/File System/syscalls.c" "/home/song/Desktop/File System/cmake-build-debug/CMakeFiles/File_System.dir/syscalls.c.o"
   "/home/song/Desktop/File System/utifunc.c" "/home/song/Desktop/File System/cmake-build-debug/CMakeFiles/File_System.dir/utifunc.c.o"

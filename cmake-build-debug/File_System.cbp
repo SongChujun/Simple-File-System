@@ -90,6 +90,9 @@
 		<Unit filename="/home/song/Desktop/File System/globaluti.h">
 			<Option target="File_System"/>
 		</Unit>
+		<Unit filename="/home/song/Desktop/File System/grouplinkmethod.c">
+			<Option target="File_System"/>
+		</Unit>
 		<Unit filename="/home/song/Desktop/File System/main.c">
 			<Option target="File_System"/>
 		</Unit>

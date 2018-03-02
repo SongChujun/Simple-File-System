@@ -4,6 +4,9 @@
 CMakeFiles/File_System.dir/InterfaceFunc.c.o: ../InterfaceFunc.c
 CMakeFiles/File_System.dir/InterfaceFunc.c.o: ../globaluti.h
 
+CMakeFiles/File_System.dir/grouplinkmethod.c.o: ../globaluti.h
+CMakeFiles/File_System.dir/grouplinkmethod.c.o: ../grouplinkmethod.c
+
 CMakeFiles/File_System.dir/main.c.o: ../globaluti.h
 CMakeFiles/File_System.dir/main.c.o: ../main.c
 

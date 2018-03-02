@@ -3,6 +3,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/File_System.dir/InterfaceFunc.c.o"
   "CMakeFiles/File_System.dir/syscalls.c.o"
   "CMakeFiles/File_System.dir/utifunc.c.o"
+  "CMakeFiles/File_System.dir/grouplinkmethod.c.o"
   "File_System.pdb"
   "File_System"
 )

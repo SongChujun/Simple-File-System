@@ -48,7 +48,7 @@ void FuncCd(const char * cmdline)
                 {
                     flag=1;
                     curnode=curnode->childlist[k];
-                    if(curnode->type==0)
+                    if(curnode->childlist[k]->type==0)
                     {
                         printf("Invalid Path\n");
                         return ;
@@ -103,7 +103,7 @@ void FuncCd(const char * cmdline)
                 {
                     flag=1;
                     curnode=curnode->childlist[k];
-                    if(curnode->type==0)
+                    if(curnode->childlist[k]->type==0)
                     {
                         printf("Invalid Path\n");
                         return ;
@@ -187,7 +187,7 @@ void FuncMkdir(const char *cmdline)
                 {
                     flag=1;
                     curnode=curnode->childlist[k];
-                    if(curnode->type==0)
+                    if(curnode->childlist[k]->type==0)
                     {
                         printf("Invalid Path\n");
                         return ;
@@ -242,7 +242,7 @@ void FuncMkdir(const char *cmdline)
                 {
                     flag=1;
                     curnode=curnode->childlist[k];
-                    if(curnode->type==0)
+                    if(curnode->childlist[k]->type==0)
                     {
                         printf("Invalid Path\n");
                         return ;
