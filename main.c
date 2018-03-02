@@ -26,6 +26,7 @@ int main()
         {
             getchar();
             char tmp[100];
+            chararrayclear(tmp,100);
             scanf("%s",tmp);
             strcat(cmdline," ");
             strcat(cmdline,tmp);
