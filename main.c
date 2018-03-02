@@ -60,11 +60,11 @@ int main()
         }
         else if ((cmdline[0]=='c')&&(cmdline[1]=='r'))
         {
-            FuncCreat(cmdline);
+//            FuncCreat(cmdline);
         }
         else if ((cmdline[0]=='o')&&(cmdline[1]=='p'))
         {
-            FuncOpen(cmdline);
+//            FuncOpen(cmdline);
         }
         else if ((cmdline[0]=='c')&&(cmdline[1]=='l'))
         {
