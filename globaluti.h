@@ -11,18 +11,23 @@
 
 #endif //FILE_SYSTEM_GLOBALUTI_H
 FILE *fp;//file pointer of the whole file
-const int CMDLSIZE=100;
-const int FILESIZE=1024*1024;
-const int MAXCHILDNUM=50;
-const int MAXFILRNUM=1000;
-const int blocksize=512;
+//const int CMDLSIZE=100;
+#define CMDLSIZE 100
+//const int FILESIZE=1024*1024;
+//const int MAXCHILDNUM=50;
+#define FILESIZE 1024*1024
+#define MAXCHILDNUM 10
+//const int MAXFILRNUM=1000;
+#define MAXFILENUM 1000
+//const int blocksize=512;
+#define blocksize 512
 void FuncCd(const char*);
 void FuncMkdir(const char*);
 void FuncDir(const char*);
 void FuncTouch(const char*);
 void FuncRm(const char*);
 void FuncCreat(const char*);
-void FuncOpen(const char*);
+int FuncOpen(const char*);
 void FuncClose(const char*);
 void FuncRead(const char*);
 void FuncWrite(const char*);
@@ -35,9 +40,9 @@ struct  TreeNode
 {
     int type;//the type of the node,0 stands for file and 1 stands for directory
     struct TreeNode* father;//pointer to the father
-    struct TreeNode* chilelist[MAXCHILDNUM];
+    struct TreeNode* childlist[MAXCHILDNUM];
     int ChildNum;//the number of children;
-    char[16] name;//the name of the node;
+    char name[16];//the name of the node;
     int inodenum;//the number of the inode;
 };
 struct TreeNode *root;
@@ -69,9 +74,12 @@ struct activeinode
     int length;
     int i_addr[8];
 };
-bool freenode[MAXFILRNUM];
+bool freenode[MAXFILENUM];
 int freeinodenum;
 int computeinodenum();
+bool freesystemopenfilesheet[100];
+int freesheetnum;
+int computefreesheetnum();
 struct systemopenfilesheet
 {
     int rwflag;
@@ -79,4 +87,6 @@ struct systemopenfilesheet
     struct activeinode* ptrtoactiveinode;
     int offset;
 };
-struct systemopenfilesheet u_ofile[100];
+struct systemopenfilesheet* u_ofile[100];
+void formalizecmdline(char *);
+void chararrayclear(char *, int);

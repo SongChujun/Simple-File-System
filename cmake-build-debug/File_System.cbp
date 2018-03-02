@@ -84,7 +84,19 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/song/Desktop/File System/InterfaceFunc.c">
+			<Option target="File_System"/>
+		</Unit>
+		<Unit filename="/home/song/Desktop/File System/globaluti.h">
+			<Option target="File_System"/>
+		</Unit>
 		<Unit filename="/home/song/Desktop/File System/main.c">
+			<Option target="File_System"/>
+		</Unit>
+		<Unit filename="/home/song/Desktop/File System/syscalls.c">
+			<Option target="File_System"/>
+		</Unit>
+		<Unit filename="/home/song/Desktop/File System/utifunc.c">
 			<Option target="File_System"/>
 		</Unit>
 		<Unit filename="/home/song/Desktop/File System/CMakeLists.txt">

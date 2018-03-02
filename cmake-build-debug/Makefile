@@ -123,6 +123,33 @@ File_System/fast:
 	$(MAKE) -f CMakeFiles/File_System.dir/build.make CMakeFiles/File_System.dir/build
 .PHONY : File_System/fast
 
+InterfaceFunc.o: InterfaceFunc.c.o
+
+.PHONY : InterfaceFunc.o
+
+# target to build an object file
+InterfaceFunc.c.o:
+	$(MAKE) -f CMakeFiles/File_System.dir/build.make CMakeFiles/File_System.dir/InterfaceFunc.c.o
+.PHONY : InterfaceFunc.c.o
+
+InterfaceFunc.i: InterfaceFunc.c.i
+
+.PHONY : InterfaceFunc.i
+
+# target to preprocess a source file
+InterfaceFunc.c.i:
+	$(MAKE) -f CMakeFiles/File_System.dir/build.make CMakeFiles/File_System.dir/InterfaceFunc.c.i
+.PHONY : InterfaceFunc.c.i
+
+InterfaceFunc.s: InterfaceFunc.c.s
+
+.PHONY : InterfaceFunc.s
+
+# target to generate assembly for a file
+InterfaceFunc.c.s:
+	$(MAKE) -f CMakeFiles/File_System.dir/build.make CMakeFiles/File_System.dir/InterfaceFunc.c.s
+.PHONY : InterfaceFunc.c.s
+
 main.o: main.c.o
 
 .PHONY : main.o
@@ -150,6 +177,60 @@ main.c.s:
 	$(MAKE) -f CMakeFiles/File_System.dir/build.make CMakeFiles/File_System.dir/main.c.s
 .PHONY : main.c.s
 
+syscalls.o: syscalls.c.o
+
+.PHONY : syscalls.o
+
+# target to build an object file
+syscalls.c.o:
+	$(MAKE) -f CMakeFiles/File_System.dir/build.make CMakeFiles/File_System.dir/syscalls.c.o
+.PHONY : syscalls.c.o
+
+syscalls.i: syscalls.c.i
+
+.PHONY : syscalls.i
+
+# target to preprocess a source file
+syscalls.c.i:
+	$(MAKE) -f CMakeFiles/File_System.dir/build.make CMakeFiles/File_System.dir/syscalls.c.i
+.PHONY : syscalls.c.i
+
+syscalls.s: syscalls.c.s
+
+.PHONY : syscalls.s
+
+# target to generate assembly for a file
+syscalls.c.s:
+	$(MAKE) -f CMakeFiles/File_System.dir/build.make CMakeFiles/File_System.dir/syscalls.c.s
+.PHONY : syscalls.c.s
+
+utifunc.o: utifunc.c.o
+
+.PHONY : utifunc.o
+
+# target to build an object file
+utifunc.c.o:
+	$(MAKE) -f CMakeFiles/File_System.dir/build.make CMakeFiles/File_System.dir/utifunc.c.o
+.PHONY : utifunc.c.o
+
+utifunc.i: utifunc.c.i
+
+.PHONY : utifunc.i
+
+# target to preprocess a source file
+utifunc.c.i:
+	$(MAKE) -f CMakeFiles/File_System.dir/build.make CMakeFiles/File_System.dir/utifunc.c.i
+.PHONY : utifunc.c.i
+
+utifunc.s: utifunc.c.s
+
+.PHONY : utifunc.s
+
+# target to generate assembly for a file
+utifunc.c.s:
+	$(MAKE) -f CMakeFiles/File_System.dir/build.make CMakeFiles/File_System.dir/utifunc.c.s
+.PHONY : utifunc.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -159,9 +240,18 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... File_System"
+	@echo "... InterfaceFunc.o"
+	@echo "... InterfaceFunc.i"
+	@echo "... InterfaceFunc.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... syscalls.o"
+	@echo "... syscalls.i"
+	@echo "... syscalls.s"
+	@echo "... utifunc.o"
+	@echo "... utifunc.i"
+	@echo "... utifunc.s"
 .PHONY : help
 
 

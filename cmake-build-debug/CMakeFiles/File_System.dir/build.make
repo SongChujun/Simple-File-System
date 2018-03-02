@@ -81,17 +81,95 @@ CMakeFiles/File_System.dir/main.c.o.provides: CMakeFiles/File_System.dir/main.c.
 CMakeFiles/File_System.dir/main.c.o.provides.build: CMakeFiles/File_System.dir/main.c.o
 
 
+CMakeFiles/File_System.dir/InterfaceFunc.c.o: CMakeFiles/File_System.dir/flags.make
+CMakeFiles/File_System.dir/InterfaceFunc.c.o: ../InterfaceFunc.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/song/Desktop/File System/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/File_System.dir/InterfaceFunc.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/File_System.dir/InterfaceFunc.c.o   -c "/home/song/Desktop/File System/InterfaceFunc.c"
+
+CMakeFiles/File_System.dir/InterfaceFunc.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/File_System.dir/InterfaceFunc.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/home/song/Desktop/File System/InterfaceFunc.c" > CMakeFiles/File_System.dir/InterfaceFunc.c.i
+
+CMakeFiles/File_System.dir/InterfaceFunc.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/File_System.dir/InterfaceFunc.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/home/song/Desktop/File System/InterfaceFunc.c" -o CMakeFiles/File_System.dir/InterfaceFunc.c.s
+
+CMakeFiles/File_System.dir/InterfaceFunc.c.o.requires:
+
+.PHONY : CMakeFiles/File_System.dir/InterfaceFunc.c.o.requires
+
+CMakeFiles/File_System.dir/InterfaceFunc.c.o.provides: CMakeFiles/File_System.dir/InterfaceFunc.c.o.requires
+	$(MAKE) -f CMakeFiles/File_System.dir/build.make CMakeFiles/File_System.dir/InterfaceFunc.c.o.provides.build
+.PHONY : CMakeFiles/File_System.dir/InterfaceFunc.c.o.provides
+
+CMakeFiles/File_System.dir/InterfaceFunc.c.o.provides.build: CMakeFiles/File_System.dir/InterfaceFunc.c.o
+
+
+CMakeFiles/File_System.dir/syscalls.c.o: CMakeFiles/File_System.dir/flags.make
+CMakeFiles/File_System.dir/syscalls.c.o: ../syscalls.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/song/Desktop/File System/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/File_System.dir/syscalls.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/File_System.dir/syscalls.c.o   -c "/home/song/Desktop/File System/syscalls.c"
+
+CMakeFiles/File_System.dir/syscalls.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/File_System.dir/syscalls.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/home/song/Desktop/File System/syscalls.c" > CMakeFiles/File_System.dir/syscalls.c.i
+
+CMakeFiles/File_System.dir/syscalls.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/File_System.dir/syscalls.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/home/song/Desktop/File System/syscalls.c" -o CMakeFiles/File_System.dir/syscalls.c.s
+
+CMakeFiles/File_System.dir/syscalls.c.o.requires:
+
+.PHONY : CMakeFiles/File_System.dir/syscalls.c.o.requires
+
+CMakeFiles/File_System.dir/syscalls.c.o.provides: CMakeFiles/File_System.dir/syscalls.c.o.requires
+	$(MAKE) -f CMakeFiles/File_System.dir/build.make CMakeFiles/File_System.dir/syscalls.c.o.provides.build
+.PHONY : CMakeFiles/File_System.dir/syscalls.c.o.provides
+
+CMakeFiles/File_System.dir/syscalls.c.o.provides.build: CMakeFiles/File_System.dir/syscalls.c.o
+
+
+CMakeFiles/File_System.dir/utifunc.c.o: CMakeFiles/File_System.dir/flags.make
+CMakeFiles/File_System.dir/utifunc.c.o: ../utifunc.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/song/Desktop/File System/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/File_System.dir/utifunc.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/File_System.dir/utifunc.c.o   -c "/home/song/Desktop/File System/utifunc.c"
+
+CMakeFiles/File_System.dir/utifunc.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/File_System.dir/utifunc.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E "/home/song/Desktop/File System/utifunc.c" > CMakeFiles/File_System.dir/utifunc.c.i
+
+CMakeFiles/File_System.dir/utifunc.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/File_System.dir/utifunc.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S "/home/song/Desktop/File System/utifunc.c" -o CMakeFiles/File_System.dir/utifunc.c.s
+
+CMakeFiles/File_System.dir/utifunc.c.o.requires:
+
+.PHONY : CMakeFiles/File_System.dir/utifunc.c.o.requires
+
+CMakeFiles/File_System.dir/utifunc.c.o.provides: CMakeFiles/File_System.dir/utifunc.c.o.requires
+	$(MAKE) -f CMakeFiles/File_System.dir/build.make CMakeFiles/File_System.dir/utifunc.c.o.provides.build
+.PHONY : CMakeFiles/File_System.dir/utifunc.c.o.provides
+
+CMakeFiles/File_System.dir/utifunc.c.o.provides.build: CMakeFiles/File_System.dir/utifunc.c.o
+
+
 # Object files for target File_System
 File_System_OBJECTS = \
-"CMakeFiles/File_System.dir/main.c.o"
+"CMakeFiles/File_System.dir/main.c.o" \
+"CMakeFiles/File_System.dir/InterfaceFunc.c.o" \
+"CMakeFiles/File_System.dir/syscalls.c.o" \
+"CMakeFiles/File_System.dir/utifunc.c.o"
 
 # External object files for target File_System
 File_System_EXTERNAL_OBJECTS =
 
 File_System: CMakeFiles/File_System.dir/main.c.o
+File_System: CMakeFiles/File_System.dir/InterfaceFunc.c.o
+File_System: CMakeFiles/File_System.dir/syscalls.c.o
+File_System: CMakeFiles/File_System.dir/utifunc.c.o
 File_System: CMakeFiles/File_System.dir/build.make
 File_System: CMakeFiles/File_System.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/home/song/Desktop/File System/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Linking C executable File_System"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/home/song/Desktop/File System/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Linking C executable File_System"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/File_System.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -100,6 +178,9 @@ CMakeFiles/File_System.dir/build: File_System
 .PHONY : CMakeFiles/File_System.dir/build
 
 CMakeFiles/File_System.dir/requires: CMakeFiles/File_System.dir/main.c.o.requires
+CMakeFiles/File_System.dir/requires: CMakeFiles/File_System.dir/InterfaceFunc.c.o.requires
+CMakeFiles/File_System.dir/requires: CMakeFiles/File_System.dir/syscalls.c.o.requires
+CMakeFiles/File_System.dir/requires: CMakeFiles/File_System.dir/utifunc.c.o.requires
 
 .PHONY : CMakeFiles/File_System.dir/requires
 

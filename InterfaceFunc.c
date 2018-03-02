@@ -18,6 +18,7 @@ void FuncCd(const char * cmdline)
         while(1)
         {
             char tmpname[16];
+            chararrayclear(tmpname,16);
             int j;
             for(j=i+1;;j++)
             {
@@ -32,17 +33,17 @@ void FuncCd(const char * cmdline)
                 {
                     break;
                 }
-                tmpname[j-i-1]=cmdline[i];
+                tmpname[j-i-1]=cmdline[j];
             }
             strcat(curpath,tmpname);
             i=j;
             flag=0;
             for(int k=0;k<curnode->ChildNum;k++)
             {
-                if(strcmp(curnode->name,tmpname)==0)
+                if(strcmp(curnode->childlist[k]->name,tmpname)==0)
                 {
                     flag=1;
-                    curnode=curnode->chilelist[curnode->ChildNum];
+                    curnode=curnode->childlist[curnode->ChildNum];
                     if(curnode->type==0)
                     {
                         printf("Invalid Path\n");
@@ -66,6 +67,7 @@ void FuncCd(const char * cmdline)
         while(1)
         {
             char tmpname[16];
+            chararrayclear(tmpname,16);
             int j;
             for(j=i+1;;j++)
             {
@@ -73,24 +75,24 @@ void FuncCd(const char * cmdline)
                 {
                     globalcurnode=curnode;
                     strcat(globalcurpath,curpath);
-                    printf("%s",globalcurpath);
+//                    printf("%s",globalcurpath);
                     return;
                 }
                 if(cmdline[j]=='/')
                 {
                     break;
                 }
-                tmpname[j-i-1]=cmdline[i];
+                tmpname[j-i-1]=cmdline[j];
             }
             strcat(curpath,tmpname);
             i=j;
             flag=0;
             for(int k=0;k<curnode->ChildNum;k++)
             {
-                if(strcmp(curnode->name,tmpname)==0)
+                if(strcmp(curnode->childlist[k]->name,tmpname)==0)
                 {
                     flag=1;
-                    curnode=curnode->chilelist[curnode->ChildNum];
+                    curnode=curnode->childlist[k];
                     if(curnode->type==0)
                     {
                         printf("Invalid Path\n");
@@ -111,6 +113,10 @@ void FuncCd(const char * cmdline)
         if(globalcurnode!=root)
         {
             globalcurnode=globalcurnode->father;
+            for(int i=strlen(globalcurpath)-1;globalcurpath[i]!='/';i--)
+            {
+                globalcurpath[i]='\0';
+            }
         }
     }
 }
@@ -118,7 +124,7 @@ void FuncMkdir(const char *cmdline)
 {
     char dirname[16];
     int begin=0;
-    for(begin=strlen(cmdline)-1;((cmdline[begin]!='/')&&(begin>0));begin--);
+    for(begin=strlen(cmdline)-3;((cmdline[begin]!='/')&&(begin>0)&&(cmdline[begin]!=' '));begin--);
     int cur=0;
     int recordbegin=begin;
     begin++;
@@ -151,12 +157,12 @@ void FuncMkdir(const char *cmdline)
             flag=0;
             if((strcmp(tmpname,dirname)==0)&&(recordbegin==i))
             {
-                struct TreeNode* newnode=(TreeNode*)malloc(sizeof(TreeNode));
+                struct TreeNode* newnode=(struct TreeNode*)malloc(sizeof(struct TreeNode));
                 strcpy(newnode->name,dirname);
                 newnode->father=curnode;
                 newnode->type=1;
                 newnode->ChildNum=0;
-                curnode->chilelist[(curnode->ChildNum)++]=newnode;
+                curnode->childlist[(curnode->ChildNum)++]=newnode;
                 return ;
             }
             for(int k=0;k<curnode->ChildNum;k++)
@@ -164,7 +170,7 @@ void FuncMkdir(const char *cmdline)
                 if(strcmp(curnode->name,tmpname)==0)
                 {
                     flag=1;
-                    curnode=curnode->chilelist[curnode->ChildNum];
+                    curnode=curnode->childlist[curnode->ChildNum];
                     if(curnode->type==0)
                     {
                         printf("Invalid Path\n");
@@ -188,6 +194,7 @@ void FuncMkdir(const char *cmdline)
         while(1)
         {
             char tmpname[16];
+            chararrayclear(tmpname,16);
             int j;
             for(j=i+1;;j++)
             {
@@ -199,26 +206,26 @@ void FuncMkdir(const char *cmdline)
                 {
                     break;
                 }
-                tmpname[j-i-1]=cmdline[i];
+                tmpname[j-i-1]=cmdline[j];
             }
-            i=j;
-            flag=0;
             if((strcmp(tmpname,dirname)==0)&&(recordbegin==i))
             {
-                struct TreeNode* newnode=(TreeNode*)malloc(sizeof(TreeNode));
+                struct TreeNode* newnode=(struct TreeNode*)malloc(sizeof(struct TreeNode));
                 strcpy(newnode->name,dirname);
                 newnode->father=curnode;
                 newnode->type=1;
                 newnode->ChildNum=0;
-                curnode->chilelist[(curnode->ChildNum)++]=newnode;
+                curnode->childlist[(curnode->ChildNum)++]=newnode;
                 return ;
             }
+            i=j;
+            flag=0;
             for(int k=0;k<curnode->ChildNum;k++)
             {
                 if(strcmp(curnode->name,tmpname)==0)
                 {
                     flag=1;
-                    curnode=curnode->chilelist[curnode->ChildNum];
+                    curnode=curnode->childlist[curnode->ChildNum];
                     if(curnode->type==0)
                     {
                         printf("Invalid Path\n");
@@ -239,15 +246,15 @@ void FuncDir(const char* cmdline)
 {
     if(globalcurnode->ChildNum==0)
     {
-        printf("Empty Directory!");
+        printf("Empty Directory!\n");
         return ;
     }
-    struct TreeNode* node=globalcurnode->chilelist[0];
+    struct TreeNode* node=globalcurnode->childlist[0];
     printf("name  type\n");
     for(int i=0;i<globalcurnode->ChildNum;i++)
     {
-        printf("%s   ",globalcurnode->chilelist[i]->name);
-        if(globalcurnode->chilelist[i]->type==0)
+        printf("%s   ",globalcurnode->childlist[i]->name);
+        if(globalcurnode->childlist[i]->type==0)
         {
             printf("file\n");
         }
