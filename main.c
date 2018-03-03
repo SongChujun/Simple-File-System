@@ -51,12 +51,12 @@ int main()
         else if ((cmdline[0]=='r')&&(cmdline[1]=='m'))
         {
             getchar();
-            char tmp[100];
-            scanf("%s",tmp);
-            strcat(cmdline," ");
-            strcat(cmdline,tmp);
-            formalizecmdline(cmdline);
-            FuncRm(cmdline);
+            char mode[100];
+            scanf("%s",mode);
+            getchar();
+            char path[100];
+            scanf("%s",path);
+            FuncRm(mode,path);
         }
         else if ((cmdline[0]=='c')&&(cmdline[1]=='r'))
         {
@@ -69,6 +69,16 @@ int main()
         else if ((cmdline[0]=='c')&&(cmdline[1]=='l'))
         {
 //            FuncClose(cmdline);
+        }
+        else if((cmdline[0]=='t')&&(cmdline[1]=='o'))
+        {
+            getchar();
+            char tmp[100];
+            tmp[0]=' ';
+            scanf("%s",tmp+1);
+//            strcat(cmdline," ");
+            formalizecmdline(tmp);
+            FuncTouch(tmp);
         }
         else
         {

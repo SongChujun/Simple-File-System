@@ -1,33 +1,15 @@
 //
 // Created by song on 3/2/18.
 //
+//#include "globaluti.h"
+//#include <header.h>
+//#include "header.h"
+
 #include "globaluti.h"
+
 int curcontainerblock;
 struct freeblock curblock;
-void init()
-{
-    curcontainerblock=-1;
-    int i,j,k;
-    j=0;
-    for(int i=0;i<10000;i++)
-    {
-        curblock.num=127;
-        curblock.s_free[0]=curcontainerblock;
-        fseek(fp,SEEK_SET,(30+j)*512);
-        curcontainerblock=j++;
-        for(k=1;k<127;k++)
-        {
-            curblock.s_free[k]=j++;
-        }
-        fwrite(&curblock,sizeof(char),1,fp);
-    }
-    immemblock.num=127;
-    immemblock.s_free[0]=curcontainerblock;
-    for(k=1;k<127;k++)
-    {
-        immemblock.s_free[k]=j++;
-    }
-}
+void init();
 int* allocblocks(int n)
 {
     if(n==0)
@@ -62,6 +44,6 @@ void freeblocks(int *blockchain)
             immemblock.s_free[0]=blockchain[i];
             i++;
         }
-        immemblock.s_free[immemblock.num++]=blockchain[i++]
+        immemblock.s_free[immemblock.num++]=blockchain[i++];
     }
 }

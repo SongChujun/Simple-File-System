@@ -21,21 +21,7 @@ FILE *fp;//file pointer of the whole file
 #define MAXFILENUM 1000
 //const int blocksize=512;
 #define blocksize 512
-void FuncCd(const char*);
-void FuncMkdir(const char*);
-void FuncDir(const char*);
-void FuncTouch(const char*);
-void FuncRm(const char*);
-void FuncCreat(const char*);
-int FuncOpen(const char*,int mode);
-void FuncClose(const char*);
-void FuncRead(const char*);
-void FuncWrite(const char*);
-void creat(char *);
-int open(char *, int);
-int close(int);
-int read(int,char *,int);
-int write(int ,void *,int);
+
 struct  TreeNode
 {
     int type;//the type of the node,0 stands for file and 1 stands for directory
@@ -47,6 +33,27 @@ struct  TreeNode
     int filedescriptor;
     int statue;
 };
+void FuncCd(const char*);
+void FuncMkdir(const char*);
+void FuncDir(const char*);
+void FuncTouch(const char*);
+void FuncRm(char*,char*);
+void FuncCreat(const char*);
+int FuncOpen(const char*,int mode);
+void FuncClose(const char*);
+void FuncRead(const char*);
+void FuncWrite(const char*);
+void FuncTouch(const char*);
+void creat(char *);
+int open(char *, int);
+int close(int);
+int read(int,void*,int);
+int write(int ,void *,int);
+int seek(int,int,int);
+int fremove(char *);
+int dirdelete(struct TreeNode**);
+int filedelete(struct TreeNode** );
+
 struct TreeNode *root;
 struct TreeNode *globalcurnode;
 char globalcurpath[128];

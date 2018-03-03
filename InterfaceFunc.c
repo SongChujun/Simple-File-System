@@ -5,6 +5,7 @@
 void FuncCd(const char * cmdline)
 {
     char curpath[128];
+
     chararrayclear(curpath,128);
     if(cmdline[2]!=' ')
     {
@@ -176,6 +177,10 @@ void FuncMkdir(const char *cmdline)
                 newnode->father=curnode;
                 newnode->type=1;
                 newnode->ChildNum=0;
+                for(int i=0;i<MAXCHILDNUM;i++)
+                {
+                    newnode->childlist[i]=NULL;
+                }
                 curnode->childlist[(curnode->ChildNum)++]=newnode;
                 return ;
             }
@@ -231,6 +236,11 @@ void FuncMkdir(const char *cmdline)
                 newnode->father=curnode;
                 newnode->type=1;
                 newnode->ChildNum=0;
+                for(int i=0;i<MAXCHILDNUM;i++)
+                {
+                    newnode->childlist[i]=NULL;
+                }
+                curnode->childlist[(curnode->ChildNum)++]=newnode;
                 curnode->childlist[(curnode->ChildNum)++]=newnode;
                 return ;
             }
@@ -265,26 +275,255 @@ void FuncDir(const char* cmdline)
         printf("Empty Directory!\n");
         return ;
     }
-    struct TreeNode* node=globalcurnode->childlist[0];
     printf("name  type\n");
-    for(int i=0;i<globalcurnode->ChildNum;i++)
+    for(int i=0;i<10;i++)
     {
-        printf("%s   ",globalcurnode->childlist[i]->name);
-        if(globalcurnode->childlist[i]->type==0)
+        if(globalcurnode->childlist[i]!=NULL)
         {
-            printf("file\n");
-        }
-        else
-        {
-            printf("directory\n");
+            printf("%s   ",globalcurnode->childlist[i]->name);
+            if(globalcurnode->childlist[i]->type==0)
+            {
+                printf("file\n");
+            }
+            else
+            {
+                printf("directory\n");
+            }
         }
     }
 }
 void FuncTouch(const char* cmdline)
 {
-
+    creat(cmdline);
 }
-void FuncRm(const char* cmdline)
+void FuncRm(char* mode, char* path)
 {
+    formalizecmdline(path);
+    if(strcmp(mode,"-r")==0)
+    {
+        if(path[0]=='/')
+        {
+            struct TreeNode* curnode=root;
+            int i=0;
+            int flag=0;
+            while(1)
+            {
+                char tmpname[16];
+                chararrayclear(tmpname,16);
+                int j;
+                for(j=i+1;;j++)
+                {
+                    if(path[j]=='$')
+                    {
+                        struct TreeNode* fathernode=curnode->father;
+                        for(int k=0;k<fathernode->ChildNum;k++)
+                        {
+                            if(strcmp(fathernode->childlist[k]->name,curnode->name)==0)
+                            {
+                                fathernode->childlist[k]=NULL;
+                                fathernode->ChildNum--;
+                                dirdelete(&curnode);
+                                return;
+                            }
+                        }
+                        return;
+                    }
+                    if(path[j]=='/')
+                    {
+                        break;
+                    }
+                    tmpname[j-i-1]=path[j];
+                }
+                i=j;
+                flag=0;
+                for(int k=0;k<curnode->ChildNum;k++)
+                {
+                    if(strcmp(curnode->childlist[k]->name,tmpname)==0)
+                    {
+                        flag=1;
+                        curnode=curnode->childlist[k];
+                        if(curnode->childlist[k]->type==0)
+                        {
+                            printf("Invalid Path\n");
+                            return ;
+                        }
+                        break;
+                    }
+                }
+                if(flag==0)
+                {
+                    printf("The file doesn't exist!\n");
+                    return;
+                }
+            }
+        }
+        else
+        {
+            struct TreeNode* curnode=globalcurnode;
+            int i=-1;
+            int flag=0;
+            while(1)
+            {
+                char tmpname[16];
+                chararrayclear(tmpname,16);
+                int j;
+                for(j=i+1;;j++)
+                {
+                    if(path[j]=='$')
+                    {
+                        struct TreeNode* fathernode=curnode->father;
+                        for(int k=0;k<fathernode->ChildNum;k++)
+                        {
+                            if(strcmp(fathernode->childlist[k]->name,curnode->name)==0)
+                            {
+                                fathernode->childlist[k]=NULL;
+                                fathernode->ChildNum--;
+                                dirdelete(&curnode);
+                                return;
+                            }
+                        }
+                        return;
+                    }
+                    if(path[j]=='/')
+                    {
+                        break;
+                    }
+                    tmpname[j-i-1]=path[j];
+                }
+//            strcat(curpath,tmpname);
+//            strcat(curpath,"/");
+                i=j;
+                flag=0;
+                for(int k=0;k<curnode->ChildNum;k++)
+                {
+                    if(strcmp(curnode->childlist[k]->name,tmpname)==0)
+                    {
+                        flag=1;
+                        curnode=curnode->childlist[k];
+                        if(curnode->childlist[k]->type==0)
+                        {
+                            printf("Invalid Path\n");
+                            return ;
+                        }
+                        break;
+                    }
+                }
+                if(flag==0)
+                {
+                    printf("The file doesn't exist!\n");
+                    return;
+                }
+            }
 
+        }
+    }
+    else
+    {
+        if(path[0]=='/')
+        {
+            struct TreeNode* curnode=root;
+            int i=0;
+            int flag=0;
+            while(1)
+            {
+                char tmpname[16];
+                chararrayclear(tmpname,16);
+                int j;
+                for(j=i+1;;j++)
+                {
+                    if(path[j]=='$')
+                    {
+                        struct TreeNode* fathernode=curnode->father;
+                        for(int k=0;k<fathernode->ChildNum;k++)
+                        {
+                            if(strcmp(fathernode->childlist[k]->name,curnode->name)==0)
+                            {
+                                filedelete(&curnode);
+                                return;
+                            }
+                        }
+                    }
+                    if(path[j]=='/')
+                    {
+                        break;
+                    }
+                    tmpname[j-i-1]=path[j];
+                }
+                i=j;
+                flag=0;
+                for(int k=0;k<curnode->ChildNum;k++)
+                {
+                    if(strcmp(curnode->childlist[k]->name,tmpname)==0)
+                    {
+                        flag=1;
+                        curnode=curnode->childlist[k];
+                        if(curnode->childlist[k]->type==0)
+                        {
+                            printf("Invalid Path\n");
+                            return ;
+                        }
+                        break;
+                    }
+                }
+                if(flag==0)
+                {
+                    printf("The file doesn't exist!\n");
+                    return;
+                }
+            }
+        }
+        else
+        {
+            struct TreeNode* curnode=root;
+            int i=-1;
+            int flag=0;
+            while(1)
+            {
+                char tmpname[16];
+                chararrayclear(tmpname,16);
+                int j;
+                for(j=i+1;;j++)
+                {
+                    if(path[j]=='$')
+                    {
+                        struct TreeNode* fathernode=curnode->father;
+                        for(int k=0;k<fathernode->ChildNum;k++)
+                        {
+                            if(strcmp(fathernode->childlist[k]->name,curnode->name)==0)
+                            {
+                                filedelete(&curnode);
+                                return;
+                            }
+                        }
+                    }
+                    if(path[j]=='/')
+                    {
+                        break;
+                    }
+                    tmpname[j-i-1]=path[j];
+                }
+                i=j;
+                flag=0;
+                for(int k=0;k<curnode->ChildNum;k++)
+                {
+                    if(strcmp(curnode->childlist[k]->name,tmpname)==0)
+                    {
+                        flag=1;
+                        curnode=curnode->childlist[k];
+                        if(curnode->childlist[k]->type==0)
+                        {
+                            printf("Invalid Path\n");
+                            return ;
+                        }
+                        break;
+                    }
+                }
+                if(flag==0)
+                {
+                    printf("The file doesn't exist!\n");
+                    return;
+                }
+            }
+        }
+    }
 }
