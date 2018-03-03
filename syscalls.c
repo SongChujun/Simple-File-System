@@ -156,6 +156,7 @@ int open(char* path,int mode)
                 u_ofile[fd]->ptrtoactiveinode=newactiveinode;
                 u_ofile[fd]->refcount=1;
                 u_ofile[fd]->ptrtotreenode=curnode;
+                u_ofile[fd]->ptrtoactiveinode->i_addr[0]=-1;
                 return fd;
             }
             else
@@ -163,7 +164,7 @@ int open(char* path,int mode)
                 free(u_ofile[curnode->filedescriptor]->ptrtoactiveinode);
                 free(u_ofile[curnode->filedescriptor]);
                 freesystemopenfilesheet[curnode->filedescriptor]=0;
-                //成组链接删除文件
+                freeblocks([curnode->filedescriptor]->ptrtoactiveinode->i_addr);
                 (curnode->father->ChildNum)-1;
                 freenode[curnode->inodenum]=1;
                 free(curnode);
@@ -243,8 +244,10 @@ int write(int fd,void *buf,int bytes)
     }
     else
     {
+        //before curlen
         offblocknum=curoff/512;
         offplusbytesnum=curlen/512;
+        int flag=curlen%512;
         for(int i=offblocknum;i<=offplusbytesnum;i++)
         {
             if(i==offblocknum)
@@ -266,7 +269,45 @@ int write(int fd,void *buf,int bytes)
             fseek(fp,SEEK_SET,30*512+i*512);
             fwrite(buf+512-curoff+(curoff%512)*512+i*512, sizeof(char),512,fp);
         }
-        int newallocblocks=(curoff+bytes-curlen)%512;
+        //after curlen
+        int curblocknum=curlen/512;
+        int currem=curlen-curlen/512*512;
+        int newblocknum=(curlen+bytes)/512;
+        int newrem=curlen+bytes-(curlen+bytes)/512*512;
+        int offblocknum=curoff/512;
+        int offrem=curoff-curoff/512*512;
+        int newallocblocks=newblocknum-curblocknum;
+        int* newblocks=allocblocks(newallocblocks);
+        if(newallocblocks==0)
+        {
+            fseek(fp,SEEK_SET,(30+u_ofile[fd]->ptrtoactiveinode->i_addr[curblocknum])*512+currem);
+            fwrite(buf+curoff+bytes-curlen,sizeof(char),curoff+bytes-curlen,fp);
+        }
+        else
+        {
+            if(currem!=0)
+            {
+                fseek(fp,SEEK_SET,(30+u_ofile[fd]->ptrtoactiveinode->i_addr[curblocknum])*512+currem);
+                fwrite(buf+curoff+bytes-curlen,sizeof(char),512-currem,fp);
+            }
+            for(int i=0;i<newallocblocks;i++)
+            {
+                if(currem==0)
+                {
+                    if(i!=newallocblocks-1)
+                    {
+                        u_ofile[fd]->ptrtoactiveinode->i_addr[i+curblocknum];
+                        fseek(fp,SEEK_SET,30*512+newblocks[i]*512);
+                        fwrite(buf+512*(curblocknum-offblocknum)+,sizeof(char),512,fp);
+                    }
+                    else
+                    {
+                        
+                    }
+
+                }
+            }
+        }
 
     }
     u_ofile[fd]->offset+=bytes;

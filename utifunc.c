@@ -46,3 +46,9 @@ void intarrayclear(int * intarray,int len)
         intarray[i]=-1;
     }
 }
+int calintarraylen(int *intarray)
+{
+    int i=0;
+    for(i=0;intarray[i]!=-1;i++);
+    return i;
+}

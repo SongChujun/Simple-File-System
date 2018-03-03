@@ -94,7 +94,8 @@ struct systemopenfilesheet* u_ofile[100];
 void formalizecmdline(char *);
 void chararrayclear(char *, int);
 void intarrayclear(int * intarray,int len);
-int* allocblocks();
+int* allocblocks(int );
+void freeblocks(int *);
 struct freeblock
 {
     int num;
@@ -102,3 +103,4 @@ struct freeblock
 };
 struct freeblock immemblock;
 void init();
+int calintarraylen(int *intarray);
