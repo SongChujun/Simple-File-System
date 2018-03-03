@@ -302,7 +302,7 @@ int write(int fd,void *buf,int bytes)
                     }
                     else
                     {
-                        
+
                     }
 
                 }

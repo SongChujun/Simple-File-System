@@ -13,10 +13,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7f39ac8a-cf59-4638-8d49-1500c8645725" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/globaluti.h" afterPath="$PROJECT_DIR$/globaluti.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grouplinkmethod.c" afterPath="$PROJECT_DIR$/grouplinkmethod.c" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/syscalls.c" afterPath="$PROJECT_DIR$/syscalls.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utifunc.c" afterPath="$PROJECT_DIR$/utifunc.c" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -106,7 +103,7 @@
         <entry file="file://$PROJECT_DIR$/syscalls.c">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="408">
-              <caret line="304" column="24" lean-forward="false" selection-start-line="304" selection-start-column="24" selection-end-line="304" selection-end-column="24" />
+              <caret line="304" column="0" lean-forward="false" selection-start-line="304" selection-start-column="0" selection-end-line="304" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -249,7 +246,7 @@
       <workItem from="1519889301069" duration="16976000" />
       <workItem from="1519917435997" duration="4862000" />
       <workItem from="1519953422450" duration="23917000" />
-      <workItem from="1520068342972" duration="5927000" />
+      <workItem from="1520068342972" duration="5978000" />
     </task>
     <task id="LOCAL-00001" summary="commit">
       <created>1519917756020</created>
@@ -293,11 +290,18 @@
       <option name="project" value="LOCAL" />
       <updated>1520002851928</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="shell with mkdir &amp; cd">
+      <created>1520074995544</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1520074995544</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="51682000" />
+    <option name="totallyTimeSpent" value="51733000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="30" width="1303" height="780" extended-state="6" />
@@ -700,7 +704,7 @@
     <entry file="file://$PROJECT_DIR$/syscalls.c">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
-          <caret line="304" column="24" lean-forward="false" selection-start-line="304" selection-start-column="24" selection-end-line="304" selection-end-column="24" />
+          <caret line="304" column="0" lean-forward="false" selection-start-line="304" selection-start-column="0" selection-end-line="304" selection-end-column="0" />
           <folding />
         </state>
       </provider>
