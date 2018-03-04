@@ -6,7 +6,7 @@ int computeinodenum()
 {
     for(int i=0;i<1000;i++)
     {
-        if((!freenode[i])&&(freenode[i+1]))
+        if(!freenode[i])
         {
             return i+20;
         }
@@ -51,4 +51,11 @@ int calintarraylen(int *intarray)
     int i=0;
     for(i=0;intarray[i]!=-1;i++);
     return i;
+}
+int boolarrayclear(bool* boolarray,int len,int val)
+{
+    for(int i=0;i<len;i++)
+    {
+        boolarray[i]=val;
+    }
 }

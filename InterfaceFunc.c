@@ -43,13 +43,13 @@ void FuncCd(const char * cmdline)
 //            strcat(curpath,tmpname);
             i=j;
             flag=0;
-            for(int k=0;k<curnode->ChildNum;k++)
+            for(int k=0;k<10;k++)
             {
-                if(strcmp(curnode->childlist[k]->name,tmpname)==0)
+                if((curnode->childlist[k]!=NULL)&&(strcmp(curnode->childlist[k]->name,tmpname)==0))
                 {
                     flag=1;
                     curnode=curnode->childlist[k];
-                    if(curnode->childlist[k]->type==0)
+                    if(curnode->type==0)
                     {
                         printf("Invalid Path\n");
                         return ;
@@ -98,13 +98,13 @@ void FuncCd(const char * cmdline)
 //            strcat(curpath,"/");
             i=j;
             flag=0;
-            for(int k=0;k<curnode->ChildNum;k++)
+            for(int k=0;k<10;k++)
             {
-                if(strcmp(curnode->childlist[k]->name,tmpname)==0)
+                if((curnode->childlist[k]!=NULL)&&(strcmp(curnode->childlist[k]->name,tmpname)==0))
                 {
                     flag=1;
                     curnode=curnode->childlist[k];
-                    if(curnode->childlist[k]->type==0)
+                    if(curnode->type==0)
                     {
                         printf("Invalid Path\n");
                         return ;
@@ -186,13 +186,13 @@ void FuncMkdir(const char *cmdline)
             }
             i=j;
             flag=0;
-            for(int k=0;k<curnode->ChildNum;k++)
+            for(int k=0;k<10;k++)
             {
-                if(strcmp(curnode->childlist[k]->name,tmpname)==0)
+                if((curnode->childlist[k]!=NULL)&&(strcmp(curnode->childlist[k]->name,tmpname)==0))
                 {
                     flag=1;
                     curnode=curnode->childlist[k];
-                    if(curnode->childlist[k]->type==0)
+                    if(curnode->type==0)
                     {
                         printf("Invalid Path\n");
                         return ;
@@ -241,18 +241,17 @@ void FuncMkdir(const char *cmdline)
                     newnode->childlist[i]=NULL;
                 }
                 curnode->childlist[(curnode->ChildNum)++]=newnode;
-                curnode->childlist[(curnode->ChildNum)++]=newnode;
                 return ;
             }
             i=j;
             flag=0;
-            for(int k=0;k<curnode->ChildNum;k++)
+            for(int k=0;k<10;k++)
             {
-                if(strcmp(curnode->childlist[k]->name,tmpname)==0)
+                if((curnode->childlist[k]!=NULL)&&(strcmp(curnode->childlist[k]->name,tmpname)==0))
                 {
                     flag=1;
                     curnode=curnode->childlist[k];
-                    if(curnode->childlist[k]->type==0)
+                    if(curnode->type==0)
                     {
                         printf("Invalid Path\n");
                         return ;
@@ -316,9 +315,9 @@ void FuncRm(char* mode, char* path)
                     if(path[j]=='$')
                     {
                         struct TreeNode* fathernode=curnode->father;
-                        for(int k=0;k<fathernode->ChildNum;k++)
+                        for(int k=0;k<10;k++)
                         {
-                            if(strcmp(fathernode->childlist[k]->name,curnode->name)==0)
+                            if((fathernode->childlist[k]!=NULL)&&(strcmp(fathernode->childlist[k]->name,curnode->name)==0))
                             {
                                 fathernode->childlist[k]=NULL;
                                 fathernode->ChildNum--;
@@ -336,13 +335,13 @@ void FuncRm(char* mode, char* path)
                 }
                 i=j;
                 flag=0;
-                for(int k=0;k<curnode->ChildNum;k++)
+                for(int k=0;k<10;k++)
                 {
-                    if(strcmp(curnode->childlist[k]->name,tmpname)==0)
+                    if((curnode->childlist[k]!=NULL)&&(strcmp(curnode->childlist[k]->name,tmpname)==0))
                     {
                         flag=1;
                         curnode=curnode->childlist[k];
-                        if(curnode->childlist[k]->type==0)
+                        if(curnode->type==0)
                         {
                             printf("Invalid Path\n");
                             return ;
@@ -372,9 +371,9 @@ void FuncRm(char* mode, char* path)
                     if(path[j]=='$')
                     {
                         struct TreeNode* fathernode=curnode->father;
-                        for(int k=0;k<fathernode->ChildNum;k++)
+                        for(int k=0;k<10;k++)
                         {
-                            if(strcmp(fathernode->childlist[k]->name,curnode->name)==0)
+                            if((fathernode->childlist[k]!=NULL)&&(strcmp(fathernode->childlist[k]->name,curnode->name)==0))
                             {
                                 fathernode->childlist[k]=NULL;
                                 fathernode->ChildNum--;
@@ -394,13 +393,13 @@ void FuncRm(char* mode, char* path)
 //            strcat(curpath,"/");
                 i=j;
                 flag=0;
-                for(int k=0;k<curnode->ChildNum;k++)
+                for(int k=0;k<10;k++)
                 {
-                    if(strcmp(curnode->childlist[k]->name,tmpname)==0)
+                    if((curnode->childlist[k]!=NULL)&&(strcmp(curnode->childlist[k]->name,tmpname)==0))
                     {
                         flag=1;
                         curnode=curnode->childlist[k];
-                        if(curnode->childlist[k]->type==0)
+                        if(curnode->type==0)
                         {
                             printf("Invalid Path\n");
                             return ;
@@ -434,10 +433,12 @@ void FuncRm(char* mode, char* path)
                     if(path[j]=='$')
                     {
                         struct TreeNode* fathernode=curnode->father;
-                        for(int k=0;k<fathernode->ChildNum;k++)
+                        for(int k=0;k<10;k++)
                         {
                             if(strcmp(fathernode->childlist[k]->name,curnode->name)==0)
                             {
+                                fathernode->childlist[k]=NULL;
+                                fathernode->ChildNum--;
                                 filedelete(&curnode);
                                 return;
                             }
@@ -451,17 +452,17 @@ void FuncRm(char* mode, char* path)
                 }
                 i=j;
                 flag=0;
-                for(int k=0;k<curnode->ChildNum;k++)
+                for(int k=0;k<10;k++)
                 {
-                    if(strcmp(curnode->childlist[k]->name,tmpname)==0)
+                    if((curnode->childlist[k]!=NULL)&&(strcmp(curnode->childlist[k]->name,tmpname)==0))
                     {
                         flag=1;
                         curnode=curnode->childlist[k];
-                        if(curnode->childlist[k]->type==0)
-                        {
-                            printf("Invalid Path\n");
-                            return ;
-                        }
+//                        if(curnode->childlist[k]->type==0)
+//                        {
+//                            printf("Invalid Path\n");
+//                            return ;
+//                        }
                         break;
                     }
                 }
@@ -487,11 +488,13 @@ void FuncRm(char* mode, char* path)
                     if(path[j]=='$')
                     {
                         struct TreeNode* fathernode=curnode->father;
-                        for(int k=0;k<fathernode->ChildNum;k++)
+                        for(int k=0;k<10;k++)
                         {
-                            if(strcmp(fathernode->childlist[k]->name,curnode->name)==0)
+                            if((fathernode->childlist[k]!=NULL)&&(strcmp(fathernode->childlist[k]->name,curnode->name)==0))
                             {
-                                filedelete(&curnode);
+                                fathernode->childlist[k]=NULL;
+                                fathernode->ChildNum--;
+                                dirdelete(&curnode);
                                 return;
                             }
                         }
@@ -504,17 +507,17 @@ void FuncRm(char* mode, char* path)
                 }
                 i=j;
                 flag=0;
-                for(int k=0;k<curnode->ChildNum;k++)
+                for(int k=0;k<10;k++)
                 {
-                    if(strcmp(curnode->childlist[k]->name,tmpname)==0)
+                    if((curnode->childlist[k]!=NULL)&&(strcmp(curnode->childlist[k]->name,tmpname)==0))
                     {
                         flag=1;
                         curnode=curnode->childlist[k];
-                        if(curnode->childlist[k]->type==0)
-                        {
-                            printf("Invalid Path\n");
-                            return ;
-                        }
+//                        if(curnode->type==0)
+//                        {
+//                            printf("Invalid Path\n");
+//                            return ;
+//                        }
                         break;
                     }
                 }

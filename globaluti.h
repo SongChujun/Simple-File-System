@@ -84,6 +84,7 @@ struct activeinode
     int i_addr[8];
 };
 bool freenode[MAXFILENUM];
+
 int freeinodenum;
 int computeinodenum();
 bool freesystemopenfilesheet[100];
@@ -111,3 +112,4 @@ struct freeblock
 struct freeblock immemblock;
 void init();
 int calintarraylen(int *intarray);
+int boolarrayclear(bool* boolarray,int len,int val);

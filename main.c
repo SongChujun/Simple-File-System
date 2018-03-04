@@ -4,6 +4,8 @@
 
 int main()
 {
+    init();
+    boolarrayclear(freenode,1000,0);
     fp=fopen("/home/song/Desktop/File System/DiskSpace","a+b");
     fseek(fp,SEEK_SET,FILESIZE*512);
     fputc(0,fp);
@@ -54,9 +56,16 @@ int main()
             char mode[100];
             scanf("%s",mode);
             getchar();
-            char path[100];
-            scanf("%s",path);
-            FuncRm(mode,path);
+            if(strcmp(mode,"-r")!=0)
+            {
+                FuncRm(" ",mode);
+            }
+            else
+            {
+                char path[100];
+                scanf("%s",path);
+                FuncRm(mode,path);
+            }
         }
         else if ((cmdline[0]=='c')&&(cmdline[1]=='r'))
         {
