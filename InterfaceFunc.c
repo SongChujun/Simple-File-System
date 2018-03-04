@@ -293,7 +293,7 @@ void FuncDir(const char* cmdline)
 }
 void FuncTouch(const char* cmdline)
 {
-    creat(cmdline);
+    mycreat(cmdline);
 }
 void FuncRm(char* mode, char* path)
 {
@@ -494,7 +494,7 @@ void FuncRm(char* mode, char* path)
                             {
                                 fathernode->childlist[k]=NULL;
                                 fathernode->ChildNum--;
-                                dirdelete(&curnode);
+                                filedelete(&curnode);
                                 return;
                             }
                         }
@@ -529,4 +529,56 @@ void FuncRm(char* mode, char* path)
             }
         }
     }
+}
+int FuncVim(const char*path)
+{
+    int fd=myopen(path,1);
+    if(fd==-1)
+    {
+        mycreat(path);
+        fd=myopen(path,1);
+//        char* args[]={"vim","/home/song/Desktop/buffile",NULL};
+//        int status;
+//        if(!fork())
+//        {
+//            execvp("vim",args);
+//        }
+//        wait(&status);
+//        char buf[4000];
+//        FILE* buffp=fopen("/home/song/Desktop/buffile","a+b");
+//        int readnum=fread(buf,sizeof(char),4000,buffp);
+        char buf[4000];
+        for(int i=0;i<100;i++)
+        {
+            buf[i]='c';
+        }
+        for(int i=0;i<100;i++)
+        {
+            printf("%c",buf[i]);
+        }
+        printf("\n");
+        mywrite(fd,buf,1000);
+    }
+    else
+    {
+        char buf[5000];
+        int readnum=myread(fd,buf,1000);
+        for(int i=0;i<100;i++)
+        {
+            printf("%c",buf[i]);
+        }
+        printf("\n");
+//        FILE* buffp=fopen("/home/song/Desktop/buffile","a+b");
+//        int writenum=fwrite(buf,sizeof(char),readnum,buffp);
+//        char* args[]={"vim","/home/song/Desktop/buffile",NULL};
+//        int status;
+//        if(!fork())
+//        {
+//            execvp("vim",args);
+//        }
+//        wait(&status);
+    }
+    myclose(fd);
+    system("rm -r \"/home/song/Desktop/buffile\"");
+    return 1;
 }

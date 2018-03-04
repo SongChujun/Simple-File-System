@@ -8,7 +8,7 @@ int computeinodenum()
     {
         if(!freenode[i])
         {
-            return i+20;
+            return i;
         }
     }
     return -1;
@@ -17,9 +17,10 @@ int computefreesheetnum()
 {
     for(int i=0;i<100;i++)
     {
-        if((!freesystemopenfilesheet[i])&&(freesystemopenfilesheet[i+1]))
+        if(!freesystemopenfilesheet[i])
         {
             return i;
+            freesystemopenfilesheet[i]=1;
         }
     }
     return -1;

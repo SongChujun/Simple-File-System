@@ -4,22 +4,26 @@
 
 int main()
 {
-    init();
     boolarrayclear(freenode,1000,0);
-    fp=fopen("/home/song/Desktop/File System/DiskSpace","a+b");
+    fp=fopen("/home/song/Desktop/File System/DiskSpace","r+b");
     fseek(fp,SEEK_SET,FILESIZE*512);
-    fputc(0,fp);
+    fputc('0',fp);
     if(fp==NULL)
     {
         printf("Open file failed!\n");
         return 0;
     }
+    init();
     root=(struct TreeNode*)malloc(sizeof(struct TreeNode));
     globalcurnode=root;
     strcpy(root->name,"/");
     root->ChildNum=0;
     root->father=NULL;
     strcpy(globalcurpath,"/");
+    for(int i=0;i<100;i++)
+    {
+        freesystemopenfilesheet[i]=0;
+    }
     char cmdline[CMDLSIZE];
     printf("root@song-Vostro-14-5480:%s$",globalcurpath);
     while(scanf("%s",cmdline)!=EOF)
@@ -88,6 +92,15 @@ int main()
 //            strcat(cmdline," ");
             formalizecmdline(tmp);
             FuncTouch(tmp);
+        }
+        else if((cmdline[0]=='v')&&(cmdline[1]=='i'))
+        {
+            getchar();
+            char path[100];
+            path[0]=' ';
+            scanf("%s",path+1);
+            formalizecmdline(path);
+            FuncVim(path);
         }
         else
         {

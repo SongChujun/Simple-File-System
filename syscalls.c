@@ -3,7 +3,7 @@
 //
 // Created by song on 3/1/18.
 //
-void creat(char* path)
+void mycreat(char* path)
 {
 //    formalizecmdline(path);
     char dirname[16];
@@ -63,9 +63,13 @@ void creat(char* path)
                 newinode.length=0;
                 newinode.type=0;
                 newinode.storetype=-1;
-                intarrayclear(newinode.i_addr,8);
-                fseek(fp,SEEK_SET,30*512+freeinodenum*sizeof(struct inode));
-                fwrite(&newinode,sizeof(newinode),1,fp);
+                int *res=allocblocks(8);
+                for(int i=0;i<8;i++)
+                {
+                    newinode.i_addr[i]=res[i];
+                }
+                fseek(fp,20*512+freeinodenum*sizeof(struct inode),SEEK_SET);
+                fwrite(&newinode,sizeof(struct inode),1,fp);
                 return;
             }
             i=j;
@@ -135,11 +139,24 @@ void creat(char* path)
                 freenode[freeinodenum]=1;
                 struct inode newinode;
                 newinode.length=0;
+                int *res=allocblocks(8);
+                for(int i=0;i<8;i++)
+                {
+                    newinode.i_addr[i]=res[i];
+                }
                 newinode.type=0;
                 newinode.storetype=-1;
-                intarrayclear(newinode.i_addr,8);
-                fseek(fp,SEEK_SET,30*512+freeinodenum*sizeof(struct inode));
-                fwrite(&newinode,sizeof(newinode),1,fp);
+                int r=fseek(fp,20*512+freeinodenum*sizeof(struct inode),SEEK_SET);
+                int offset=ftell(fp);
+                int len=fwrite(&newinode,sizeof(struct inode),1,fp);
+
+                int errornum=ferror(fp);
+
+//                int rr=fseek(fp,512*20+(curnode->inodenum)*sizeof(struct inode),SEEK_SET);
+//                long off=ftell(fp);
+//                len=fread(&newinode,sizeof(struct inode),1,fp);
+//
+//                errornum=ferror(fp);
                 return;
             }
             i=j;
@@ -166,12 +183,12 @@ void creat(char* path)
         }
     }
 }
-int open(char* path,int mode)
+int myopen(char* path,int mode)
 {
-    formalizecmdline(path);
+//    formalizecmdline(path);
     char filename[16];
     int begin=0;
-    for(begin=strlen(path)-1;((path[begin]!='/')&&(begin>0));begin--);
+    for(begin=strlen(path)-3;((path[begin]!='/')&&(begin>0)&&(path[begin]!=' '));begin--);
     int cur=0;
     int recordbegin=begin;
     begin++;
@@ -207,24 +224,24 @@ int open(char* path,int mode)
                 {
                     flag=1;
                     curnode=curnode->childlist[k];
-                    if(curnode->childlist[k]->type==0)
-                    {
-                        printf("Invalid Path\n");
-                        return -1;
-                    }
-                    break;
+//                    if(curnode->type==0)
+//                    {
+//                        printf("Invalid Path\n");
+//                        return -1;
+//                    }
+//                    break;
                 }
             }
             if(flag==0)
             {
-                printf("The file doesn't exist!\n");
+//                printf("The file doesn't exist!\n");
                 return -1;
             }
             if(mode==1)
             {
                 curnode->statue=1;
                 struct inode newinode;
-                fseek(fp,SEEK_SET,512*20+(curnode->inodenum)*sizeof(struct inode));
+                fseek(fp,512*20+(curnode->inodenum)*sizeof(struct inode),SEEK_SET);
                 fread(&newinode,sizeof(struct inode),1,fp);
                 struct  activeinode *newactiveinode=(struct activeinode*)malloc(sizeof(struct activeinode));
                 newactiveinode->inodenum=curnode->inodenum;
@@ -244,7 +261,6 @@ int open(char* path,int mode)
                 u_ofile[fd]->ptrtoactiveinode=newactiveinode;
                 u_ofile[fd]->refcount=1;
                 u_ofile[fd]->ptrtotreenode=curnode;
-                u_ofile[fd]->ptrtoactiveinode->i_addr[0]=-1;
                 return fd;
             }
             else
@@ -287,14 +303,14 @@ int open(char* path,int mode)
         }
         if(flag==0)
         {
-            printf("The file doesn't exist!\n");
+//            printf("The file doesn't exist!\n");
             return -1;
         }
     }
 
 }
 
-int close(int fd)
+int myclose(int fd)
 {
     if(freesystemopenfilesheet[fd]==0)
         return 0;
@@ -313,128 +329,76 @@ int close(int fd)
 
     return 1;
 }
-int write(int fd,void *buf,int bytes)
+int mywrite(int fd, char *buf,int bytes)
 {
+    for(int i=0;i<100;i++)
+    {
+        printf("%c",buf[i]);
+    }
+    printf("\n");
     if(u_ofile[fd]->ptrtotreenode->statue==0)
     {
         return -1;//the file must be opend;
     }
     int curoff=u_ofile[fd]->offset;
-    int curlen=u_ofile[fd]->ptrtoactiveinode->length;
-    int offblocknum=0;
-    int offplusbytesnum=0;
-    if(curoff+bytes<=curlen)
+    int offplusbytes=u_ofile[fd]->offset+bytes;
+    int offblocknum=(curoff)/512;
+    int offrem=curoff-curoff/512*512;
+    int offplusbytesnum=(offplusbytes)/512;
+    int offplusbytesrem=offplusbytes-offplusbytes/512*512;
+    int *i_addr=u_ofile[fd]->ptrtoactiveinode->i_addr;
+    if(offblocknum==offplusbytesnum)
     {
-        offblocknum=curoff/512;
-        offplusbytesnum=(curoff+bytes)/512;
-        for(int i=offblocknum;i<=offplusbytesnum;i++)
+        fseek(fp,20*512+512*i_addr[offblocknum],SEEK_SET);
+        fwrite(buf,1,offplusbytes-curoff,fp);
+        return ;
+    }
+    int blocks=offplusbytesnum-offblocknum;
+    if((offrem==0)&&(offplusbytesrem==0))
+    {
+        for(int i=offblocknum;i<offplusbytesnum;i++)
         {
-            if(i==offblocknum)
-            {
-                int start=u_ofile[fd]->ptrtoactiveinode->i_addr[offblocknum];
-                fseek(fp,SEEK_SET,30*512+start*512+curoff-(curoff%512)*512);
-                fwrite(buf, sizeof(char),512-curoff+(curoff%512)*512,fp);
-            }
-            else if(i==offplusbytesnum)
-            {
-                if((curoff+bytes)%512==0)
-                {
-                    break;
-                }
-                int end=u_ofile[fd]->ptrtoactiveinode->i_addr[offplusbytesnum];
-                fseek(fp,SEEK_SET,30*512+end*512);
-                fwrite(buf+512*(offplusbytesnum-offblocknum)+512-curoff+(curoff%512)*512, sizeof(char),curoff+bytes-(curoff+bytes)/512*512,fp);
-            }
-            fseek(fp,SEEK_SET,30*512+i*512);
-            fwrite(buf+512-curoff+(curoff%512)*512+i*512, sizeof(char),512,fp);
+            fseek(fp,30*512+i_addr[i]*512,SEEK_SET);
+            fwrite(buf+512*(i-offblocknum),sizeof(char),512,fp);
+        }
+    }
+    else if((offrem==0)&&(offplusbytesrem!=0))
+    {
+        int i;
+        for(i=offblocknum;i<offplusbytesnum;i++)
+        {
+            fseek(fp,30*512+((long)i_addr[i])*512,SEEK_SET);
+            int offset=ftell(fp);
+            fwrite(buf+512*(i-offblocknum),sizeof(char),512,fp);
+        }
+        fseek(fp,30*512+i_addr[offplusbytesnum]*512,SEEK_SET);
+        fwrite(buf+512*(i-offblocknum),sizeof(char),offplusbytesrem,fp);
+    }
+    else if((offrem!=0)&&(offplusbytesrem==0))
+    {
+        fseek(fp,30*512+i_addr[offblocknum]*512+offrem,SEEK_SET);
+        fwrite(buf,sizeof(char),512-offrem,fp);
+        int i;
+        for(i=offblocknum+1;i<offplusbytesnum;i++)
+        {
+            fseek(fp,30*512+i_addr[i]*512,SEEK_SET);
+            fwrite(buf+512*(i-offblocknum)+512-offrem,sizeof(char),512,fp);
         }
     }
     else
     {
-        //before curlen
-        offblocknum=curoff/512;
-        offplusbytesnum=curlen/512;
-        int flag=curlen%512;
-        for(int i=offblocknum;i<=offplusbytesnum;i++)
+        fseek(fp,30*512+i_addr[offblocknum]*512+offrem,SEEK_SET);
+        fwrite(buf,sizeof(char),512-offrem,fp);
+        int i;
+        for(i=offblocknum+1;i<offplusbytesnum;i++)
         {
-            if(i==offblocknum)
-            {
-                int start=u_ofile[fd]->ptrtoactiveinode->i_addr[offblocknum];
-                fseek(fp,SEEK_SET,30*512+start*512+curoff-(curoff%512)*512);
-                fwrite(buf, sizeof(char),512-curoff+(curoff%512)*512,fp);
-            }
-            else if(i==offplusbytesnum)
-            {
-                if((curoff+bytes)%512==0)
-                {
-                    break;
-                }
-                int end=u_ofile[fd]->ptrtoactiveinode->i_addr[offplusbytesnum];
-                fseek(fp,SEEK_SET,30*512+end*512);
-                fwrite(buf+512*(offplusbytesnum-offblocknum)+512-curoff+(curoff%512)*512,sizeof(char),curoff+bytes-(curoff+bytes)/512*512,fp);
-            }
-            fseek(fp,SEEK_SET,30*512+i*512);
-            fwrite(buf+512-curoff+(curoff%512)*512+i*512, sizeof(char),512,fp);
+            fseek(fp,30*512+i_addr[i]*512,SEEK_SET);
+            fwrite(buf+512*(i-offblocknum)+512-offrem,sizeof(char),512,fp);
         }
-        //after curlen
-        int curblocknum=curlen/512;
-        int currem=curlen-curlen/512*512;
-        int newblocknum=(curlen+bytes)/512;
-        int newrem=curlen+bytes-(curlen+bytes)/512*512;
-        int offblocknum=curoff/512;
-        int offrem=curoff-curoff/512*512;
-        int newallocblocks=newblocknum-curblocknum;
-        int* newblocks=allocblocks(newallocblocks);
-        if(newallocblocks==0)
-        {
-            fseek(fp,SEEK_SET,(30+u_ofile[fd]->ptrtoactiveinode->i_addr[curblocknum])*512+currem);
-            fwrite(buf+curoff+bytes-curlen,sizeof(char),curoff+bytes-curlen,fp);
-        }
-        else
-        {
-            if(currem!=0)
-            {
-                fseek(fp,SEEK_SET,(30+u_ofile[fd]->ptrtoactiveinode->i_addr[curblocknum])*512+currem);
-                fwrite(buf+curoff+bytes-curlen,sizeof(char),512-currem,fp);
-            }
-            for(int i=0;i<newallocblocks;i++)
-            {
-                if(currem==0)
-                {
-                    if(i!=newallocblocks-1)
-                    {
-                        u_ofile[fd]->ptrtoactiveinode->i_addr[i+curblocknum]=newblocks[i];
-                        fseek(fp,SEEK_SET,30*512+newblocks[i]*512);
-                        fwrite(buf+curlen-curoff+i*512,sizeof(char),512,fp);
-                    }
-                    else
-                    {
-                        u_ofile[fd]->ptrtoactiveinode->i_addr[i+curblocknum]=newblocks[i];
-                        fseek(fp,SEEK_SET,30*512+newblocks[i]*512);
-                        fwrite(buf+curlen+bytes-(curlen+bytes)/512*512,sizeof(char),512,fp);
-                    }
-                }
-                else
-                {
-                    if(i!=newallocblocks-1)
-                    {
-                        u_ofile[fd]->ptrtoactiveinode->i_addr[i+curblocknum]=newblocks[i];
-                        fseek(fp,SEEK_SET,30*512+newblocks[i]*512);
-                        fwrite(buf+curlen-curoff+512-currem+i*512,sizeof(char),512,fp);
-                    }
-                    else
-                    {
-                        u_ofile[fd]->ptrtoactiveinode->i_addr[i+curblocknum]=newblocks[i];
-                        fseek(fp,SEEK_SET,30*512+newblocks[i]*512);
-                        fwrite(buf+curlen+bytes-(curlen+bytes)/512*512,sizeof(char),512,fp);
-                    }
-                }
-            }
-        }
-
+        fseek(fp,30*512+i_addr[offplusbytesnum]*512,SEEK_SET);
+        fwrite(buf+512*(i-offblocknum)+512-offrem,sizeof(char),offplusbytesrem,fp);
     }
-    u_ofile[fd]->offset+=bytes;
-    u_ofile[fd]->ptrtoactiveinode->length=curoff+bytes;
+    return 1;
 }
 int seek(int fd,int mode,int bytes)
 {
@@ -448,42 +412,75 @@ int seek(int fd,int mode,int bytes)
     }
     u_ofile[fd]->offset+=bytes;
 }
-int read(int fd,void* buf,int bytes)
+int myread(int fd,char * buf,int bytes)
 {
     if(u_ofile[fd]->ptrtotreenode->statue==0)
     {
         return -1;//the file must be opend;
     }
-    int curlen=u_ofile[fd]->offset+bytes;
     int curoff=u_ofile[fd]->offset;
-    int curnode=(u_ofile[fd]->ptrtoactiveinode->length>1)?(u_ofile[fd]->ptrtoactiveinode->length-1)/512:0;
-    int currem=u_ofile[fd]->ptrtoactiveinode->length-curnode*512;
-    int offnode=(u_ofile[fd]->offset>1)?(u_ofile[fd]->offset-1)/512:0;
-    int offrem=u_ofile[fd]->offset-512*offnode;
-    if(curnode==offnode)
+    int offplusbytes=u_ofile[fd]->offset+bytes;
+    int offblocknum=(curoff)/512;
+    int offrem=curoff-curoff/512*512;
+    int offplusbytesnum=(offplusbytes)/512;
+    int offplusbytesrem=offplusbytes-offplusbytes/512*512;
+    int *i_addr=u_ofile[fd]->ptrtoactiveinode->i_addr;
+    if(offblocknum==offplusbytesnum)
     {
-        fseek(fp,SEEK_SET,(curnode+30)*512+currem);
-        fread(buf,sizeof(char),currem-offrem,fp);
+        fseek(fp,20*512+512*i_addr[offblocknum],SEEK_SET);
+        fread(buf,1,offplusbytes-curoff,fp);
+        return ;
+    }
+    int blocks=offplusbytesnum-offblocknum;
+    if((offrem==0)&&(offplusbytesrem==0))
+    {
+        for(int i=offblocknum;i<offplusbytesnum;i++)
+        {
+            fseek(fp,30*512+i_addr[i]*512,SEEK_SET);
+            fread(buf+512*(i-offblocknum),sizeof(char),512,fp);
+        }
+    }
+    else if((offrem==0)&&(offplusbytesrem!=0))
+    {
+        int i;
+        for(i=offblocknum;i<offplusbytesnum;i++)
+        {
+            fseek(fp,30*512+i_addr[i]*512,SEEK_SET);
+            fread(buf+512*(i-offblocknum),sizeof(char),512,fp);
+        }
+        fseek(fp,30*512+i_addr[offplusbytesnum]*512,SEEK_SET);
+        fread(buf+512*(i-offblocknum),sizeof(char),offplusbytesrem,fp);
+    }
+    else if((offrem!=0)&&(offplusbytesrem==0))
+    {
+        fseek(fp,30*512+i_addr[offblocknum]*512+offrem,SEEK_SET);
+        fread(buf,sizeof(char),512-offrem,fp);
+        int i;
+        for(i=offblocknum+1;i<offplusbytesnum;i++)
+        {
+            fseek(fp,30*512+i_addr[i]*512,SEEK_SET);
+            fread(buf+512*(i-offblocknum)+512-offrem,sizeof(char),512,fp);
+        }
     }
     else
     {
-        fseek(fp,SEEK_SET,(curnode+30)*512+currem);
-        fwrite(buf,sizeof(char),512-currem,fp);
-        int nodes=curnode-offnode;
-        for(int i=0;i<nodes;i++)
+        fseek(fp,30*512+i_addr[offblocknum]*512+offrem,SEEK_SET);
+        fread(buf,sizeof(char),512-offrem,fp);
+        int i;
+        for(i=offblocknum+1;i<offplusbytesnum;i++)
         {
-            if(i==nodes-1)
-            {
-                fseek(fp,SEEK_SET,(curnode+30)*512+currem);
-                fread(buf,sizeof(char),currem-offrem,fp);
-            }
-            else
-            {
-                fseek(fp,SEEK_SET,(offnode+i+1+30)*512);
-                fread(buf,sizeof(char),512,fp);
-            }
+            fseek(fp,30*512+i_addr[i]*512,SEEK_SET);
+            fread(buf+512*(i-offblocknum)+512-offrem,sizeof(char),512,fp);
         }
+        fseek(fp,30*512+i_addr[offplusbytesnum]*512,SEEK_SET);
+        fread(buf+512*(i-offblocknum)+512-offrem,sizeof(char),offplusbytesrem,fp);
     }
+    for(int i=0;i<100;i++)
+    {
+        printf("%c",buf[i]);
+    }
+    printf("\n");
+    return 1;
 }
 int fremove(char *path)
 {
@@ -576,7 +573,8 @@ int filedelete(struct TreeNode** ptrtocurnode)
     if(curnode==NULL)
         return -1;
     struct inode newinode;
-    fseek(fp,SEEK_SET,512*20+(curnode->inodenum)*sizeof(struct inode));
+    int res=fseek(fp,512*20+(curnode->inodenum)*sizeof(struct inode),SEEK_SET);
+    long offset=ftell(fp);
     fread(&newinode,sizeof(struct inode),1,fp);
     freeblocks(newinode.i_addr);
     free(curnode);

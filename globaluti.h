@@ -6,6 +6,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include<unistd.h>
+#include<sys/types.h>
+#include <sys/wait.h>
 #ifndef FILE_SYSTEM_GLOBALUTI_H
 #define FILE_SYSTEM_GLOBALUTI_H
 
@@ -44,16 +47,16 @@ void FuncClose(const char*);
 void FuncRead(const char*);
 void FuncWrite(const char*);
 void FuncTouch(const char*);
-void creat(char *);
-int open(char *, int);
-int close(int);
-int read(int,void*,int);
-int write(int ,void *,int);
-int seek(int,int,int);
+void mycreat(char *);
+int myopen(char *, int);
+int myclose(int);
+int myread(int,char *,int);
+int mywrite(int , char *,int);
+int myseek(int,int,int);
 int fremove(char *);
 int dirdelete(struct TreeNode**);
 int filedelete(struct TreeNode** );
-
+int FuncVim(const char*);
 struct TreeNode *root;
 struct TreeNode *globalcurnode;
 char globalcurpath[128];

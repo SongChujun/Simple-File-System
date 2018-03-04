@@ -56,7 +56,7 @@ int* allocblocks(int n)
 }
 void freeblocks(int *blockchain)
 {
-    int len=calintarraylen(blockchain);
+    int len=8;
     for(int i=0;i<len;i++)
     {
         if(immemblock.num==127)
