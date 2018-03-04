@@ -13,12 +13,6 @@
   <component name="ChangeListManager">
     <list default="true" id="7f39ac8a-cf59-4638-8d49-1500c8645725" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/InterfaceFunc.c" afterPath="$PROJECT_DIR$/InterfaceFunc.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/globaluti.h" afterPath="$PROJECT_DIR$/globaluti.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grouplinkmethod.c" afterPath="$PROJECT_DIR$/grouplinkmethod.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.c" afterPath="$PROJECT_DIR$/main.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/syscalls.c" afterPath="$PROJECT_DIR$/syscalls.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utifunc.c" afterPath="$PROJECT_DIR$/utifunc.c" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -275,7 +269,7 @@
       <workItem from="1520147742284" duration="3641000" />
       <workItem from="1520161709209" duration="3979000" />
       <workItem from="1520166743571" duration="6230000" />
-      <workItem from="1520174502206" duration="2227000" />
+      <workItem from="1520174502206" duration="2271000" />
     </task>
     <task id="LOCAL-00001" summary="commit">
       <created>1519917756020</created>
@@ -347,11 +341,18 @@
       <option name="project" value="LOCAL" />
       <updated>1520130692916</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="shell with rm(partially debug)">
+      <created>1520176747606</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1520176747606</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="92510000" />
+    <option name="totallyTimeSpent" value="92554000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1301" height="772" extended-state="6" />
