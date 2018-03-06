@@ -243,25 +243,25 @@ int myopen(char* path,int mode)
                 char buf[1100];
                 curnode->statue=1;
                 struct inode newinode;
-                fseek(fp,650319360,SEEK_SET);
-                int position=ftell(fp);
-                printf("beforepos=%d\n",position);
-                fread(buf,sizeof(char),1000,fp);
-                for(i=0;i<100;i++)
-                {
-                    printf("%c",buf[i]);
-                }
+//                fseek(fp,650319360,SEEK_SET);
+//                int position=ftell(fp);
+//                printf("beforepos=%d\n",position);
+//                fread(buf,sizeof(char),1000,fp);
+//                for(i=0;i<100;i++)
+//                {
+//                    printf("%c",buf[i]);
+//                }
 
-                fseek(fp,512*20+(curnode->inodenum)*sizeof(struct inode),SEEK_SET);
+//                fseek(fp,512*20+(curnode->inodenum)*sizeof(struct inode),SEEK_SET);
 
-                fseek(fp,650319360,SEEK_SET);
-                position=ftell(fp);
-                printf("afterpos=%d\n",position);
-                fread(buf,sizeof(char),1000,fp);
-                for(i=0;i<100;i++)
-                {
-                    printf("%c",buf[i]);
-                }
+//                fseek(fp,650319360,SEEK_SET);
+//                position=ftell(fp);
+//                printf("afterpos=%d\n",position);
+//                fread(buf,sizeof(char),1000,fp);
+//                for(i=0;i<100;i++)
+//                {
+//                    printf("%c",buf[i]);
+//                }
 
                 fseek(fp,512*20+(curnode->inodenum)*sizeof(struct inode),SEEK_SET);
                 fread(&newinode,sizeof(struct inode),1,fp);
@@ -352,7 +352,7 @@ int myclose(int fd)
 }
 int mywrite(int fd, char *buf,int bytes)
 {
-    for(int i=0;i<100;i++)
+    for(int i=0;i<bytes;i++)
     {
         printf("%c",buf[i]);
     }
@@ -368,11 +368,13 @@ int mywrite(int fd, char *buf,int bytes)
     int offplusbytesnum=(offplusbytes)/512;
     int offplusbytesrem=offplusbytes-offplusbytes/512*512;
     int *i_addr=u_ofile[fd]->ptrtoactiveinode->i_addr;
+
     if(offblocknum==offplusbytesnum)
     {
-        fseek(fp,20*512+512*i_addr[offblocknum],SEEK_SET);
-        fwrite(buf,1,offplusbytes-curoff,fp);
-        return 1;
+        fseek(fp,30*512+512*i_addr[offblocknum],SEEK_SET);
+        fwrite(buf,sizeof(char),offplusbytes-curoff,fp);
+        u_ofile[fd]->ptrtoactiveinode->length+=bytes;
+        return bytes;
     }
     int blocks=offplusbytesnum-offblocknum;
     if((offrem==0)&&(offplusbytesrem==0))
@@ -392,26 +394,18 @@ int mywrite(int fd, char *buf,int bytes)
             int offset=ftell(fp);
             fwrite(buf+512*(i-offblocknum),sizeof(char),512,fp);
             fflush(fp);
-            fseek(fp,650319360,SEEK_SET);
-            char tmp[512];
-            fread(tmp,sizeof(char),512,fp);
-            for(int i=0;i<100;i++)
-            {
-                printf("%c",tmp[i]);
-            }
-            printf("endforloop\n");
         }
         fseek(fp,30*512+i_addr[offplusbytesnum]*512,SEEK_SET);
         fwrite(buf+512*(i-offblocknum),sizeof(char),offplusbytesrem,fp);
 
-        fseek(fp,650319360,SEEK_SET);
-        char tmp[512];
-        fread(tmp,sizeof(char),512,fp);
-        for(int i=0;i<100;i++)
-        {
-            printf("%c",tmp[i]);
-        }
-        printf("afterforloop\n");
+//        fseek(fp,650319360,SEEK_SET);
+//        char tmp[512];
+//        fread(tmp,sizeof(char),512,fp);
+//        for(int i=0;i<100;i++)
+//        {
+//            printf("%c",tmp[i]);
+//        }
+//        printf("afterforloop\n");
 
         fflush(fp);
     }
@@ -439,7 +433,8 @@ int mywrite(int fd, char *buf,int bytes)
         fseek(fp,30*512+i_addr[offplusbytesnum]*512,SEEK_SET);
         fwrite(buf+512*(i-offblocknum)+512-offrem,sizeof(char),offplusbytesrem,fp);
     }
-    return 1;
+    u_ofile[fd]->ptrtoactiveinode->length+=bytes;
+    return bytes;
 }
 int seek(int fd,int mode,int bytes)
 {
@@ -468,9 +463,9 @@ int myread(int fd,char * buf,int bytes)
     int *i_addr=u_ofile[fd]->ptrtoactiveinode->i_addr;
     if(offblocknum==offplusbytesnum)
     {
-        fseek(fp,20*512+512*i_addr[offblocknum],SEEK_SET);
-        fread(buf,1,offplusbytes-curoff,fp);
-        return 1;
+        fseek(fp,30*512+512*i_addr[offblocknum],SEEK_SET);
+        fread(buf,sizeof(char),offplusbytes-curoff,fp);
+        return bytes;
     }
     int blocks=offplusbytesnum-offblocknum;
     if((offrem==0)&&(offplusbytesrem==0))
@@ -486,14 +481,6 @@ int myread(int fd,char * buf,int bytes)
         int i;
         for(i=offblocknum;i<offplusbytesnum;i++)
         {
-            char tmp[512];
-            fseek(fp,30*512+i_addr[i]*512,SEEK_SET);
-            fread(tmp,sizeof(char),512,fp);
-            for(int i=0;i<100;i++)
-            {
-                printf("%c",tmp[i]);
-            }
-            printf("\n");
             fseek(fp,30*512+i_addr[i]*512,SEEK_SET);
             fread(buf+512*(i-offblocknum),sizeof(char),512,fp);
         }
@@ -529,7 +516,7 @@ int myread(int fd,char * buf,int bytes)
         printf("%c",buf[i]);
     }
     printf("\n");
-    return 1;
+    return bytes;
 }
 int dirdelete(struct TreeNode** ptrtocurnode)
 {

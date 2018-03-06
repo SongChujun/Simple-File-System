@@ -116,3 +116,5 @@ void init();
 int calintarraylen(int *intarray);
 int boolarrayclear(bool* boolarray,int len,int val);
 void TreeNodeclear(struct TreeNode** arg);
+void clearblocks(int *);
+

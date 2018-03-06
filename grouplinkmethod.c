@@ -57,6 +57,16 @@ int* allocblocks(int n)
 void freeblocks(int *blockchain)
 {
     int len=8;
+    char buf[512];
+    for(int i=0;i<512;i++)
+    {
+        buf[i]=' ';
+    }
+    for(int i=0;i<8;i++)
+    {
+        fseek(fp,30*512+blockchain[i]*512,SEEK_SET);
+        fwrite(buf,sizeof(char),512,fp);
+    }
     for(int i=0;i<len;i++)
     {
         if(immemblock.num==127)
