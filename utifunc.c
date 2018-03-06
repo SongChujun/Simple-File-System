@@ -60,3 +60,12 @@ int boolarrayclear(bool* boolarray,int len,int val)
         boolarray[i]=val;
     }
 }
+void TreeNodeclear(struct TreeNode** arg)
+{
+    struct  TreeNode* curnode=*arg;
+    curnode->father=NULL;
+    for(int i=0;i<10;i++)
+    {
+        curnode->childlist[i]=NULL;
+    }
+}

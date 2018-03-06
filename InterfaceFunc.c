@@ -2,7 +2,7 @@
 // Created by song on 3/1/18.
 //
 #include "globaluti.h"
-void FuncCd(const char * cmdline)
+void FuncCd(char * cmdline)
 {
     char curpath[128];
 
@@ -136,7 +136,7 @@ void FuncCd(const char * cmdline)
         }
     }
 }
-void FuncMkdir(const char *cmdline)
+void FuncMkdir(char *cmdline)
 {
     char dirname[16];
     int begin=0;
@@ -177,11 +177,19 @@ void FuncMkdir(const char *cmdline)
                 newnode->father=curnode;
                 newnode->type=1;
                 newnode->ChildNum=0;
-                for(int i=0;i<MAXCHILDNUM;i++)
+                for(int i=0;i<10;i++)
                 {
                     newnode->childlist[i]=NULL;
                 }
-                curnode->childlist[(curnode->ChildNum)++]=newnode;
+                for(int i=0;i<10;i++)
+                {
+                    if(curnode->childlist[i]==NULL)
+                    {
+                        curnode->childlist[i]=newnode;
+                        break;
+                    }
+                }
+                curnode->ChildNum++;
                 return ;
             }
             i=j;
@@ -236,11 +244,19 @@ void FuncMkdir(const char *cmdline)
                 newnode->father=curnode;
                 newnode->type=1;
                 newnode->ChildNum=0;
-                for(int i=0;i<MAXCHILDNUM;i++)
+                for(int i=0;i<10;i++)
                 {
                     newnode->childlist[i]=NULL;
                 }
-                curnode->childlist[(curnode->ChildNum)++]=newnode;
+                for(int i=0;i<10;i++)
+                {
+                    if(curnode->childlist[i]==NULL)
+                    {
+                        curnode->childlist[i]=newnode;
+                        break;
+                    }
+                }
+                curnode->ChildNum++;
                 return ;
             }
             i=j;
@@ -267,12 +283,12 @@ void FuncMkdir(const char *cmdline)
         }
     }
 }
-void FuncDir(const char* cmdline)
+void FuncDir(char* cmdline)
 {
     if(globalcurnode->ChildNum==0)
     {
-        printf("Empty Directory!\n");
-        return ;
+        printf("Empty directory\n");
+        return;
     }
     printf("name  type\n");
     for(int i=0;i<10;i++)
@@ -291,7 +307,7 @@ void FuncDir(const char* cmdline)
         }
     }
 }
-void FuncTouch(const char* cmdline)
+void FuncTouch(char* cmdline)
 {
     mycreat(cmdline);
 }
@@ -302,6 +318,17 @@ void FuncRm(char* mode, char* path)
     {
         if(path[0]=='/')
         {
+            char dirname[16];
+            int begin=0;
+            for(begin=strlen(path)-3;((path[begin]!='/')&&(begin>0)&&(path[begin]!=' '));begin--);
+            int cur=0;
+            int recordbegin=begin;
+            begin++;
+            for(;begin<strlen(path)-2;begin++)
+            {
+                dirname[cur++]=path[begin];
+            }
+
             struct TreeNode* curnode=root;
             int i=0;
             int flag=0;
@@ -332,6 +359,22 @@ void FuncRm(char* mode, char* path)
                         break;
                     }
                     tmpname[j-i-1]=path[j];
+                }
+                if((strcmp(tmpname,dirname)==0)&&(recordbegin==i))
+                {
+                    for(int k=0;k<10;k++)
+                    {
+                        if((curnode->childlist[k]!=NULL)&&(strcmp(curnode->childlist[k]->name,tmpname)==0))
+                        {
+                            flag=1;
+                            curnode->ChildNum--;
+                            curnode=curnode->childlist[k];
+                            curnode->father->childlist[k]=NULL;
+                            break;
+                        }
+                    }
+                    dirdelete(&curnode);
+                    return;
                 }
                 i=j;
                 flag=0;
@@ -475,7 +518,7 @@ void FuncRm(char* mode, char* path)
         }
         else
         {
-            struct TreeNode* curnode=root;
+            struct TreeNode* curnode=globalcurnode;
             int i=-1;
             int flag=0;
             while(1)
@@ -530,34 +573,43 @@ void FuncRm(char* mode, char* path)
         }
     }
 }
-int FuncVim(const char*path)
+int FuncVim(char*path)
 {
     int fd=myopen(path,1);
     if(fd==-1)
     {
+
         mycreat(path);
         fd=myopen(path,1);
-//        char* args[]={"vim","/home/song/Desktop/buffile",NULL};
-//        int status;
-//        if(!fork())
-//        {
-//            execvp("vim",args);
-//        }
-//        wait(&status);
-//        char buf[4000];
-//        FILE* buffp=fopen("/home/song/Desktop/buffile","a+b");
-//        int readnum=fread(buf,sizeof(char),4000,buffp);
-        char buf[4000];
-        for(int i=0;i<100;i++)
+        char* args[]={"vim","/home/song/Desktop/File System/buffile",NULL};
+        int status;
+        if(!fork())
         {
-            buf[i]='c';
+            execvp("vim",args);
         }
+        wait(&status);
+        char buf[4000];
+        FILE* buffp=fopen("/home/song/Desktop/File System/buffile","r+b");
+        int readnum=fread(buf,sizeof(char),4000,buffp);
+//        for(int i=0;i<100;i++)
+//        {
+//            buf[i]='d';
+//        }
         for(int i=0;i<100;i++)
         {
             printf("%c",buf[i]);
         }
         printf("\n");
         mywrite(fd,buf,1000);
+
+        fseek(fp,650319360,SEEK_SET);
+        int position=ftell(fp);
+        printf("afterwritepos=%d\n",position);
+        fread(buf,sizeof(char),1000,fp);
+        for(int i=0;i<100;i++)
+        {
+            printf("%c",buf[i]);
+        }
     }
     else
     {
@@ -568,17 +620,17 @@ int FuncVim(const char*path)
             printf("%c",buf[i]);
         }
         printf("\n");
-//        FILE* buffp=fopen("/home/song/Desktop/buffile","a+b");
-//        int writenum=fwrite(buf,sizeof(char),readnum,buffp);
-//        char* args[]={"vim","/home/song/Desktop/buffile",NULL};
-//        int status;
-//        if(!fork())
-//        {
-//            execvp("vim",args);
-//        }
-//        wait(&status);
+        FILE* buffp=fopen("/home/song/Desktop/File System/buffile","a+b");
+        int writenum=fwrite(buf,sizeof(char),readnum,buffp);
+        char* args[]={"vim","/home/song/Desktop/File System/buffile",NULL};
+        int status;
+        if(!fork())
+        {
+            execvp("vim",args);
+        }
+        wait(&status);
     }
     myclose(fd);
-    system("rm -r \"/home/song/Desktop/buffile\"");
+//    system("rm -r \"/home/song/Desktop/buffile\"");
     return 1;
 }

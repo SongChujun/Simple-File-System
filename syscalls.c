@@ -187,6 +187,7 @@ int myopen(char* path,int mode)
 {
 //    formalizecmdline(path);
     char filename[16];
+    chararrayclear(filename,16);
     int begin=0;
     for(begin=strlen(path)-3;((path[begin]!='/')&&(begin>0)&&(path[begin]!=' '));begin--);
     int cur=0;
@@ -218,9 +219,9 @@ int myopen(char* path,int mode)
         }
         if((strcmp(tmpname,filename)==0)&&(recordbegin==i))
         {
-            for(int k=0;k<curnode->ChildNum;k++)
+            for(int k=0;k<10;k++)
             {
-                if(strcmp(curnode->childlist[k]->name,tmpname)==0)
+                if((curnode->childlist[k]!=NULL)&&(strcmp(curnode->childlist[k]->name,tmpname)==0))
                 {
                     flag=1;
                     curnode=curnode->childlist[k];
@@ -229,7 +230,7 @@ int myopen(char* path,int mode)
 //                        printf("Invalid Path\n");
 //                        return -1;
 //                    }
-//                    break;
+                    break;
                 }
             }
             if(flag==0)
@@ -239,8 +240,29 @@ int myopen(char* path,int mode)
             }
             if(mode==1)
             {
+                char buf[1100];
                 curnode->statue=1;
                 struct inode newinode;
+                fseek(fp,650319360,SEEK_SET);
+                int position=ftell(fp);
+                printf("beforepos=%d\n",position);
+                fread(buf,sizeof(char),1000,fp);
+                for(i=0;i<100;i++)
+                {
+                    printf("%c",buf[i]);
+                }
+
+                fseek(fp,512*20+(curnode->inodenum)*sizeof(struct inode),SEEK_SET);
+
+                fseek(fp,650319360,SEEK_SET);
+                position=ftell(fp);
+                printf("afterpos=%d\n",position);
+                fread(buf,sizeof(char),1000,fp);
+                for(i=0;i<100;i++)
+                {
+                    printf("%c",buf[i]);
+                }
+
                 fseek(fp,512*20+(curnode->inodenum)*sizeof(struct inode),SEEK_SET);
                 fread(&newinode,sizeof(struct inode),1,fp);
                 struct  activeinode *newactiveinode=(struct activeinode*)malloc(sizeof(struct activeinode));
@@ -269,7 +291,7 @@ int myopen(char* path,int mode)
                 free(u_ofile[curnode->filedescriptor]);
                 freesystemopenfilesheet[curnode->filedescriptor]=0;
                 struct inode newinode;
-                fseek(fp,SEEK_SET,512*20+(curnode->inodenum)*sizeof(struct inode));
+                fseek(fp,512*20+(curnode->inodenum)*sizeof(struct inode),SEEK_SET);
                 fread(&newinode,sizeof(struct inode),1,fp);
                 freeblocks(newinode.i_addr);
                 free(curnode);
@@ -293,11 +315,11 @@ int myopen(char* path,int mode)
             {
                 flag=1;
                 curnode=curnode->childlist[k];
-                if(curnode->childlist[k]->type==0)
-                {
-                    printf("Invalid Path\n");
-                    return -1;
-                }
+//                if(curnode->->type==0)
+//                {
+//                    printf("Invalid Path\n");
+//                    return -1;
+//                }
                 break;
             }
         }
@@ -322,11 +344,10 @@ int myclose(int fd)
     {
         newinode.i_addr[i]=u_ofile[fd]->ptrtoactiveinode->i_addr[i];
     }
-    fseek(fp,SEEK_SET,30*512+u_ofile[fd]->ptrtotreenode->inodenum*512);
+    fseek(fp,20*512+(u_ofile[fd]->ptrtotreenode->inodenum)* sizeof(struct inode),SEEK_SET);
     fwrite(&newinode,sizeof(struct inode),1,fp);
     free(u_ofile[fd]->ptrtoactiveinode);
     free(u_ofile[fd]);
-
     return 1;
 }
 int mywrite(int fd, char *buf,int bytes)
@@ -351,7 +372,7 @@ int mywrite(int fd, char *buf,int bytes)
     {
         fseek(fp,20*512+512*i_addr[offblocknum],SEEK_SET);
         fwrite(buf,1,offplusbytes-curoff,fp);
-        return ;
+        return 1;
     }
     int blocks=offplusbytesnum-offblocknum;
     if((offrem==0)&&(offplusbytesrem==0))
@@ -370,9 +391,29 @@ int mywrite(int fd, char *buf,int bytes)
             fseek(fp,30*512+((long)i_addr[i])*512,SEEK_SET);
             int offset=ftell(fp);
             fwrite(buf+512*(i-offblocknum),sizeof(char),512,fp);
+            fflush(fp);
+            fseek(fp,650319360,SEEK_SET);
+            char tmp[512];
+            fread(tmp,sizeof(char),512,fp);
+            for(int i=0;i<100;i++)
+            {
+                printf("%c",tmp[i]);
+            }
+            printf("endforloop\n");
         }
         fseek(fp,30*512+i_addr[offplusbytesnum]*512,SEEK_SET);
         fwrite(buf+512*(i-offblocknum),sizeof(char),offplusbytesrem,fp);
+
+        fseek(fp,650319360,SEEK_SET);
+        char tmp[512];
+        fread(tmp,sizeof(char),512,fp);
+        for(int i=0;i<100;i++)
+        {
+            printf("%c",tmp[i]);
+        }
+        printf("afterforloop\n");
+
+        fflush(fp);
     }
     else if((offrem!=0)&&(offplusbytesrem==0))
     {
@@ -429,7 +470,7 @@ int myread(int fd,char * buf,int bytes)
     {
         fseek(fp,20*512+512*i_addr[offblocknum],SEEK_SET);
         fread(buf,1,offplusbytes-curoff,fp);
-        return ;
+        return 1;
     }
     int blocks=offplusbytesnum-offblocknum;
     if((offrem==0)&&(offplusbytesrem==0))
@@ -445,6 +486,14 @@ int myread(int fd,char * buf,int bytes)
         int i;
         for(i=offblocknum;i<offplusbytesnum;i++)
         {
+            char tmp[512];
+            fseek(fp,30*512+i_addr[i]*512,SEEK_SET);
+            fread(tmp,sizeof(char),512,fp);
+            for(int i=0;i<100;i++)
+            {
+                printf("%c",tmp[i]);
+            }
+            printf("\n");
             fseek(fp,30*512+i_addr[i]*512,SEEK_SET);
             fread(buf+512*(i-offblocknum),sizeof(char),512,fp);
         }
@@ -482,66 +531,6 @@ int myread(int fd,char * buf,int bytes)
     printf("\n");
     return 1;
 }
-int fremove(char *path)
-{
-    formalizecmdline(path);
-    char dirname[16];
-    int begin=0;
-    for(begin=strlen(path)-1;((path[begin]!='/')&&(begin>0));begin--);
-    int cur=0;
-    int recordbegin=begin;
-    begin++;
-    for(;begin<strlen(path)-2;begin++)
-    {
-        dirname[cur++]=path[begin];
-    }
-    struct TreeNode* curnode=root;
-    int i=1;
-    int flag=0;
-    while(1)
-    {
-        char tmpname[16];
-        chararrayclear(tmpname,16);
-        int j;
-        for(j=i+1;;j++)
-        {
-            if(path[j]=='$')
-            {
-                return;
-            }
-            if(path[j]=='/')
-            {
-                break;
-            }
-            tmpname[j-i-1]=path[j];
-        }
-        if((strcmp(tmpname,dirname)==0)&&(recordbegin==i))
-        {
-
-        }
-        i=j;
-        flag=0;
-        for(int k=0;k<curnode->ChildNum;k++)
-        {
-            if(strcmp(curnode->childlist[k]->name,tmpname)==0)
-            {
-                flag=1;
-                curnode=curnode->childlist[k];
-                if(curnode->childlist[k]->type==0)
-                {
-                    printf("Invalid Path\n");
-                    return ;
-                }
-                break;
-            }
-        }
-        if(flag==0)
-        {
-            printf("The file doesn't exist!\n");
-            return;
-        }
-    }
-}
 int dirdelete(struct TreeNode** ptrtocurnode)
 {
     struct TreeNode * curnode=*ptrtocurnode;
@@ -555,14 +544,13 @@ int dirdelete(struct TreeNode** ptrtocurnode)
         }
         if((curnode)->childlist[i]->type==0)
         {
-            freenode[(curnode)->childlist[i]->inodenum]=1;
-            dirdelete(&(curnode->childlist[i]));
-            free(curnode->childlist[i]);
+            filedelete(&(curnode->childlist[i]));
+            curnode->childlist[i]=NULL;
         }
         else
         {
+            dirdelete(&(curnode->childlist[i]));
             curnode->childlist[i]=NULL;
-            filedelete(&(curnode->childlist[i]));
         }
     }
     free(curnode);
@@ -570,6 +558,7 @@ int dirdelete(struct TreeNode** ptrtocurnode)
 int filedelete(struct TreeNode** ptrtocurnode)
 {
     struct TreeNode* curnode=*ptrtocurnode;
+    freenode[curnode->inodenum]=1;
     if(curnode==NULL)
         return -1;
     struct inode newinode;
