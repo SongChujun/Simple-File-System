@@ -47,7 +47,8 @@ void FuncClose(char*);
 void FuncRead(char*);
 void FuncWrite(char*);
 void FuncTouch(char*);
-void mycreat(char *);
+void FuncCp(char*, char*);
+struct TreeNode* mycreat(char* path);
 int myopen(char *, int);
 int myclose(int);
 int myread(int,char *,int);
@@ -117,4 +118,6 @@ int calintarraylen(int *intarray);
 int boolarrayclear(bool* boolarray,int len,int val);
 void TreeNodeclear(struct TreeNode** arg);
 void clearblocks(int *);
+struct TreeNode* caltreenode(char *path);
+struct inode testnode;
 

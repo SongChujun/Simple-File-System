@@ -7,6 +7,8 @@ int main(int argc,char* argv[])
     if(argc>1)
     {
         fp=fopen("/home/song/Desktop/File System/DiskSpace","r+b");
+        fseek(fp,10240,SEEK_SET);
+        fread(&testnode,sizeof(struct inode),1,fp);
         if(fp==NULL)
         {
             printf("File open failed\n");
@@ -25,7 +27,7 @@ int main(int argc,char* argv[])
         fseek(fp,0,SEEK_SET);
         int num=-2;
         fread(&num,sizeof(int),1,fp);
-        if(num<1)
+        if(num>=1)
         {
             int k=0;
             for(int i=0;i<10;i++)
@@ -40,13 +42,13 @@ int main(int argc,char* argv[])
                 }
             }
             root->ChildNum=k;
-            for(int i=0;i<10;i++)
+            for(int i=0;i<5;i++)
             {
                 curnode=root->childlist[i];
                 fread(&num,sizeof(int),1,fp);
                 if(num<1)
                 {
-                    for(int j=0;i<10;i++)
+                    for(int j=0;i<5;i++)
                     {
                         fread(tmpnode,sizeof(struct TreeNode),1,fp);
                     }
@@ -54,7 +56,7 @@ int main(int argc,char* argv[])
                 else
                 {
                     int k=0;
-                    for(int j=0;i<10;i++)
+                    for(int j=0;i<5;i++)
                     {
                         fread(tmpnode,sizeof(struct TreeNode),1,fp);
                         if(strcmp(tmpnode->name,"$")!=0)
@@ -73,7 +75,7 @@ int main(int argc,char* argv[])
         strcpy(nullnode->name,"$");
         num=-1;
         fseek(fp,0,SEEK_SET);
-        for(int i=0;i<200;i++)
+        for(int i=0;i<70;i++)
         {
             fwrite(&num,sizeof(int),1,fp);
             fwrite(nullnode,sizeof(struct TreeNode),1,fp);
@@ -85,6 +87,8 @@ int main(int argc,char* argv[])
         strcpy(root->name,"/");
         root->father=NULL;
         strcpy(globalcurpath,"/");
+        fseek(fp,10240,SEEK_SET);
+        fread(&testnode,sizeof(struct inode),1,fp);
     }
     else
     {
@@ -163,9 +167,15 @@ int main(int argc,char* argv[])
                 FuncRm(mode,path);
             }
         }
-        else if ((cmdline[0]=='c')&&(cmdline[1]=='r'))
+        else if ((cmdline[0]=='c')&&(cmdline[1]=='p'))
         {
-//            FuncCreat(cmdline);
+            char source[128];
+            chararrayclear(source,128);
+            scanf("%s",source);
+            char dest[128];
+            chararrayclear(dest,128);
+            scanf("%s",dest);
+            FuncCp(source,dest);
         }
         else if ((cmdline[0]=='o')&&(cmdline[1]=='p'))
         {
@@ -196,6 +206,8 @@ int main(int argc,char* argv[])
         }
         else if(cmdline[0]=='q')
         {
+            fseek(fp,10240,SEEK_SET);
+            fread(&testnode,sizeof(struct inode),1,fp);
             struct TreeNode* curnode=root;
             struct TreeNode *tmpnode;
             struct TreeNode* nullnode=(struct TreeNode*)malloc(sizeof(struct TreeNode));
@@ -215,14 +227,16 @@ int main(int argc,char* argv[])
                     fwrite(nullnode,sizeof(struct TreeNode),1,fp);
                 }
             }
-            for(int i=0;i<10;i++)
+            fseek(fp,10240,SEEK_SET);
+            fread(&testnode,sizeof(struct inode),1,fp);
+            for(int i=0;i<5;i++)
             {
                 curnode=root->childlist[i];
                 if(curnode==NULL)
                 {
                     int num=-1;
                     fwrite(&num, sizeof(int),1,fp);
-                    for(int j=0;j<10;j++)
+                    for(int j=0;j<5;j++)
                     {
                         fwrite(nullnode,sizeof(struct TreeNode),1,fp);
                     }
@@ -231,7 +245,7 @@ int main(int argc,char* argv[])
                 {
                     int num=curnode->ChildNum;
                     fwrite(&num,sizeof(int),1,fp);
-                    for(int j=0;j<10;j++)
+                    for(int j=0;j<5;j++)
                     {
                         if(curnode->childlist[j]!=NULL)
                         {
@@ -244,9 +258,14 @@ int main(int argc,char* argv[])
                     }
                 }
             }
+            fseek(fp,10240,SEEK_SET);
+            fread(&testnode,sizeof(struct inode),1,fp);
+
             fseek(fp,10*512,SEEK_SET);
             fwrite(&freenode,sizeof(bool),1000,fp);
             fwrite(&immemblock,sizeof(struct freeblock),1,fp);
+            fseek(fp,10240,SEEK_SET);
+            fread(&testnode,sizeof(struct inode),1,fp);
             fclose(fp);
             return 1;
         }

@@ -12,6 +12,13 @@ void FuncCd(char * cmdline)
         printf("Unrecognized Command Line!\n");
         return;
     }
+    else if((strlen(cmdline)==4)&&(cmdline[3]='/'))
+    {
+        globalcurnode=root;
+        chararrayclear(globalcurpath,128);
+        strcpy(globalcurpath,"/");
+        return;
+    }
     else if(cmdline[3]=='/')
     {
         struct TreeNode* curnode=root;
@@ -139,6 +146,7 @@ void FuncCd(char * cmdline)
 void FuncMkdir(char *cmdline)
 {
     char dirname[16];
+    chararrayclear(dirname,16);
     int begin=0;
     for(begin=strlen(cmdline)-3;((cmdline[begin]!='/')&&(begin>0)&&(cmdline[begin]!=' '));begin--);
     int cur=0;
@@ -652,4 +660,119 @@ int FuncVim(char*path)
     buffp=fopen("/home/song/Desktop/File System/buffile","w");
     fclose(buffp);
     return 1;
+}
+void FuncCp(char *source,char*dest)
+{
+    formalizecmdline(source);
+    formalizecmdline(dest);
+    dest[-1]=' ';
+    struct TreeNode* sourcenode=caltreenode(source);
+    struct TreeNode* dstnode=mycreat(dest-1);
+    struct inode sourceinode;
+    struct inode dstinode;
+    fseek(fp,20*512+(sourcenode->inodenum)*sizeof(struct inode),SEEK_SET);
+    fread(&sourceinode,sizeof(sourceinode),1,fp);
+    fseek(fp,20*512+(dstnode->inodenum)*sizeof(struct inode),SEEK_SET);
+    fread(&dstinode,sizeof(sourceinode),1,fp);
+    dstinode.length=sourceinode.length;
+    fseek(fp,20*512+(dstnode->inodenum)*sizeof(struct inode),SEEK_SET);
+    fwrite(&dstinode,sizeof(sourceinode),1,fp);
+    char buf[512];
+    for(int i=0;i<8;i++)
+    {
+        fseek(fp,30*512+512*sourceinode.i_addr[i],SEEK_SET);
+        fread(buf,sizeof(char),512,fp);
+        fseek(fp,30*512+512*dstinode.i_addr[i],SEEK_SET);
+        fwrite(buf,sizeof(char),512,fp);
+    }
+    chararrayclear(dstnode->name,16);
+    strcpy(dstnode->name,sourcenode->name);
+}
+
+struct TreeNode* caltreenode(char *path)
+{
+    if((strlen(path)==1)&&(path[0]=='/'))
+    {
+        return root;
+    }
+    else if(path[0]=='/')
+    {
+        struct TreeNode* curnode=root;
+        int i=0;
+        int flag=0;
+        while(1)
+        {
+            char tmpname[16];
+            chararrayclear(tmpname,16);
+            int j;
+            for(j=i+1;;j++)
+            {
+                if(path[j]=='$')
+                {
+                    return curnode;
+                }
+                if(path[j]=='/')
+                {
+                    break;
+                }
+                tmpname[j-i-1]=path[j];
+            }
+            i=j;
+            flag=0;
+            for(int k=0;k<10;k++)
+            {
+                if((curnode->childlist[k]!=NULL)&&(strcmp(curnode->childlist[k]->name,tmpname)==0))
+                {
+                    flag=1;
+                    curnode=curnode->childlist[k];
+                    break;
+                }
+            }
+            if(flag==0)
+            {
+                printf("The file doesn't exist!\n");
+                return NULL;
+            }
+        }
+    }
+    else
+    {
+        struct TreeNode* curnode=globalcurnode;
+        int i=-1;
+        int flag=0;
+        while(1)
+        {
+            char tmpname[16];
+            chararrayclear(tmpname,16);
+            int j;
+            for(j=i+1;;j++)
+            {
+                if(path[j]=='$')
+                {
+                    return curnode;
+                }
+                if(path[j]=='/')
+                {
+                    break;
+                }
+                tmpname[j-i-1]=path[j];
+            }
+            i=j;
+            flag=0;
+            for(int k=0;k<10;k++)
+            {
+                if((curnode->childlist[k]!=NULL)&&(strcmp(curnode->childlist[k]->name,tmpname)==0))
+                {
+                    flag=1;
+                    curnode=curnode->childlist[k];
+                    break;
+                }
+            }
+            if(flag==0)
+            {
+                printf("The file doesn't exist!\n");
+                return NULL;
+            }
+        }
+    }
 }

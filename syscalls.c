@@ -3,7 +3,7 @@
 //
 // Created by song on 3/1/18.
 //
-void mycreat(char* path)
+struct TreeNode* mycreat(char* path)
 {
 //    formalizecmdline(path);
     char dirname[16];
@@ -42,6 +42,7 @@ void mycreat(char* path)
             if((strcmp(tmpname,dirname)==0)&&(recordbegin==i))
             {
                 struct TreeNode* newnode=(struct TreeNode*)malloc(sizeof(struct TreeNode));
+                chararrayclear(newnode->name,16);
                 strcpy(newnode->name,dirname);
                 newnode->father=curnode;
                 newnode->type=0;
@@ -57,7 +58,7 @@ void mycreat(char* path)
                 curnode->ChildNum++;
                 newnode->father=curnode;
                 freeinodenum=computeinodenum();
-                curnode->inodenum=freeinodenum;
+                newnode->inodenum=freeinodenum;
                 freenode[freeinodenum]=1;
                 struct inode newinode;
                 newinode.length=0;
@@ -70,7 +71,7 @@ void mycreat(char* path)
                 }
                 fseek(fp,20*512+freeinodenum*sizeof(struct inode),SEEK_SET);
                 fwrite(&newinode,sizeof(struct inode),1,fp);
-                return;
+                return newnode;
             }
             i=j;
             flag=0;
@@ -157,7 +158,8 @@ void mycreat(char* path)
 //                len=fread(&newinode,sizeof(struct inode),1,fp);
 //
 //                errornum=ferror(fp);
-                return;
+                return newnode;
+
             }
             i=j;
             flag=0;
@@ -167,11 +169,6 @@ void mycreat(char* path)
                 {
                     flag=1;
                     curnode=curnode->childlist[k];
-                    if(curnode->childlist[k]->type==0)
-                    {
-                        printf("Invalid Path\n");
-                        return ;
-                    }
                     break;
                 }
             }
@@ -240,6 +237,7 @@ int myopen(char* path,int mode)
             }
             if(mode==1)
             {
+
                 char buf[1100];
                 curnode->statue=1;
                 struct inode newinode;
@@ -272,6 +270,7 @@ int myopen(char* path,int mode)
                 {
                     newactiveinode->i_addr[i]=newinode.i_addr[i];
                 }
+
                 newactiveinode->length=newinode.length;
                 newactiveinode->refcount=1;
                 int fd=computefreesheetnum();

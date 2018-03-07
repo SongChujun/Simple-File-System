@@ -11,14 +11,12 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7f39ac8a-cf59-4638-8d49-1500c8645725" name="Default" comment="fix some bug">
+    <list default="true" id="7f39ac8a-cf59-4638-8d49-1500c8645725" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/InterfaceFunc.c" afterPath="$PROJECT_DIR$/InterfaceFunc.c" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/globaluti.h" afterPath="$PROJECT_DIR$/globaluti.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grouplinkmethod.c" afterPath="$PROJECT_DIR$/grouplinkmethod.c" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.c" afterPath="$PROJECT_DIR$/main.c" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/syscalls.c" afterPath="$PROJECT_DIR$/syscalls.c" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utifunc.c" afterPath="$PROJECT_DIR$/utifunc.c" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -33,8 +31,8 @@
       <file leaf-file-name="globaluti.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/globaluti.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2124">
-              <caret line="118" column="0" lean-forward="false" selection-start-line="118" selection-start-column="0" selection-end-line="118" selection-end-column="24" />
+            <state relative-caret-position="334">
+              <caret line="121" column="22" lean-forward="false" selection-start-line="121" selection-start-column="22" selection-end-line="121" selection-end-column="22" />
               <folding>
                 <element signature="e#37#55#0" expanded="true" />
               </folding>
@@ -42,11 +40,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.c" pinned="false" current-in-tab="false">
+      <file leaf-file-name="main.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3402">
-              <caret line="189" column="0" lean-forward="false" selection-start-line="189" selection-start-column="0" selection-end-line="189" selection-end-column="0" />
+            <state relative-caret-position="141">
+              <caret line="231" column="0" lean-forward="false" selection-start-line="231" selection-start-column="0" selection-end-line="231" selection-end-column="0" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -57,8 +55,8 @@
       <file leaf-file-name="grouplinkmethod.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/grouplinkmethod.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="990">
-              <caret line="55" column="1" lean-forward="false" selection-start-line="55" selection-start-column="1" selection-end-line="55" selection-end-column="1" />
+            <state relative-caret-position="396">
+              <caret line="52" column="0" lean-forward="false" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -67,18 +65,18 @@
       <file leaf-file-name="InterfaceFunc.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/InterfaceFunc.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="241">
-              <caret line="617" column="38" lean-forward="false" selection-start-line="617" selection-start-column="38" selection-end-line="617" selection-end-column="38" />
+            <state relative-caret-position="177">
+              <caret line="586" column="0" lean-forward="false" selection-start-line="586" selection-start-column="0" selection-end-line="586" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="syscalls.c" pinned="false" current-in-tab="true">
+      <file leaf-file-name="syscalls.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/syscalls.c">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="141">
-              <caret line="343" column="5" lean-forward="true" selection-start-line="343" selection-start-column="5" selection-end-line="343" selection-end-column="5" />
+              <caret line="345" column="0" lean-forward="false" selection-start-line="345" selection-start-column="0" selection-end-line="345" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -97,8 +95,8 @@
       <file leaf-file-name="utifunc.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utifunc.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="21" column="41" lean-forward="false" selection-start-line="21" selection-start-column="41" selection-end-line="21" selection-end-column="41" />
+            <state relative-caret-position="306">
+              <caret line="17" column="26" lean-forward="true" selection-start-line="17" selection-start-column="26" selection-end-line="17" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -124,40 +122,50 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="File_System (disassembly)" pinned="false" current-in-tab="false">
+        <entry file="mock:///File_System (disassembly)">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>len</find>
-      <find>+4</find>
-      <find>forma</find>
-      <find>Cd</find>
-      <find>root</find>
       <find>k</find>
       <find>107</find>
       <find>delete</find>
-      <find>global</find>
       <find>mk</find>
       <find>init</find>
       <find>fathernode</find>
       <find>rm</find>
       <find>write</find>
-      <find>close</find>
       <find>forloop</find>
       <find>650319360</find>
       <find>1270125</find>
       <find>read</find>
-      <find>cmdline</find>
-      <find>cd</find>
       <find>R</find>
       <find>Rm</find>
       <find>fremove</find>
-      <find>creat</find>
       <find>before</find>
+      <find>dir</find>
+      <find>cd</find>
+      <find>cmdline</find>
       <find>mkdir</find>
+      <find>creat</find>
+      <find>vim</find>
       <find>length</find>
-      <find>myread</find>
+      <find>close</find>
       <find>open</find>
+      <find>cp</find>
+      <find>myread</find>
+      <find>struct inode testnode</find>
+      <find>myclose</find>
+      <find>global</find>
     </findStrings>
     <replaceStrings>
       <replace>filename</replace>
@@ -181,20 +189,20 @@
         <option value="$PROJECT_DIR$/tuifunc.c" />
         <option value="$PROJECT_DIR$/header.h" />
         <option value="$PROJECT_DIR$/Makefile" />
-        <option value="$PROJECT_DIR$/globaluti.h" />
         <option value="$PROJECT_DIR$/grouplinkmethod.c" />
-        <option value="$PROJECT_DIR$/main.c" />
+        <option value="$PROJECT_DIR$/utifunc.c" />
         <option value="$PROJECT_DIR$/syscalls.c" />
         <option value="$PROJECT_DIR$/InterfaceFunc.c" />
-        <option value="$PROJECT_DIR$/utifunc.c" />
+        <option value="$PROJECT_DIR$/globaluti.h" />
+        <option value="$PROJECT_DIR$/main.c" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="95" />
-    <option name="y" value="55" />
-    <option name="width" value="1269" />
-    <option name="height" value="600" />
+    <option name="x" value="99" />
+    <option name="y" value="82" />
+    <option name="width" value="1267" />
+    <option name="height" value="564" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -284,7 +292,7 @@
     <configuration name="Build All" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" EXPLICIT_BUILD_TARGET_NAME="all">
       <envs />
     </configuration>
-    <configuration name="File_System" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="File_System" TARGET_NAME="File_System" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="File_System" RUN_TARGET_NAME="File_System">
+    <configuration name="File_System" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="12" PASS_PARENT_ENVS_2="true" PROJECT_NAME="File_System" TARGET_NAME="File_System" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="File_System" RUN_TARGET_NAME="File_System">
       <envs />
     </configuration>
     <list size="2">
@@ -319,7 +327,10 @@
       <workItem from="1520244976128" duration="12013000" />
       <workItem from="1520263414941" duration="13332000" />
       <workItem from="1520349732953" duration="4544000" />
-      <workItem from="1520330372529" duration="1430000" />
+      <workItem from="1520330372529" duration="1485000" />
+      <workItem from="1520348284468" duration="12000" />
+      <workItem from="1520418163792" duration="1967000" />
+      <workItem from="1520410312579" duration="12471000" />
     </task>
     <task id="LOCAL-00001" summary="commit">
       <created>1519917756020</created>
@@ -412,23 +423,29 @@
       <option name="project" value="LOCAL" />
       <updated>1520299311055</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="fix some bug">
+      <created>1520335688761</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1520335688761</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="137355000" />
+    <option name="totallyTimeSpent" value="151860000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="95" y="55" width="1303" height="780" extended-state="6" />
-    <editor active="true" />
+    <frame x="99" y="82" width="1303" height="780" extended-state="6" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22751729" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32868218" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32962447" sideWeight="0.49561754" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.46314326" sideWeight="0.49561754" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5051793" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32823366" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32823366" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934132" sideWeight="0.49730977" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -456,10 +473,22 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/main.c</url>
+          <line>231</line>
+          <option name="timeStamp" value="236" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/main.c</url>
+          <line>263</line>
+          <option name="timeStamp" value="237" />
+        </line-breakpoint>
+      </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="161" />
+      <option name="time" value="238" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="CMakeRunConfiguration">
@@ -797,29 +826,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/utifunc.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="17" column="26" lean-forward="true" selection-start-line="17" selection-start-column="26" selection-end-line="17" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/grouplinkmethod.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="990">
-          <caret line="55" column="1" lean-forward="false" selection-start-line="55" selection-start-column="1" selection-end-line="55" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/globaluti.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2124">
-          <caret line="118" column="0" lean-forward="false" selection-start-line="118" selection-start-column="0" selection-end-line="118" selection-end-column="24" />
-          <folding>
-            <element signature="e#37#55#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -831,37 +850,47 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.c">
+    <entry file="file://$PROJECT_DIR$/syscalls.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3402">
-          <caret line="189" column="0" lean-forward="false" selection-start-line="189" selection-start-column="0" selection-end-line="189" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="141">
+          <caret line="345" column="0" lean-forward="false" selection-start-line="345" selection-start-column="0" selection-end-line="345" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/InterfaceFunc.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="241">
-          <caret line="617" column="38" lean-forward="false" selection-start-line="617" selection-start-column="38" selection-end-line="617" selection-end-column="38" />
+        <state relative-caret-position="177">
+          <caret line="586" column="0" lean-forward="false" selection-start-line="586" selection-start-column="0" selection-end-line="586" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utifunc.c">
+    <entry file="file://$PROJECT_DIR$/grouplinkmethod.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="21" column="41" lean-forward="false" selection-start-line="21" selection-start-column="41" selection-end-line="21" selection-end-column="41" />
+        <state relative-caret-position="396">
+          <caret line="52" column="0" lean-forward="false" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/syscalls.c">
+    <entry file="file://$PROJECT_DIR$/globaluti.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="334">
+          <caret line="121" column="22" lean-forward="false" selection-start-line="121" selection-start-column="22" selection-end-line="121" selection-end-column="22" />
+          <folding>
+            <element signature="e#37#55#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.c">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="141">
-          <caret line="343" column="5" lean-forward="true" selection-start-line="343" selection-start-column="5" selection-end-line="343" selection-end-column="5" />
-          <folding />
+          <caret line="231" column="0" lean-forward="false" selection-start-line="231" selection-start-column="0" selection-end-line="231" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
