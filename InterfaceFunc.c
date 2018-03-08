@@ -590,29 +590,30 @@ int FuncVim(char*path)
         printf("this is write\n");
         mycreat(path);
         fd=myopen(path,1);
-//        char* args[]={"vim","/home/song/Desktop/File System/buffile",NULL};
-//        int status;
-//        if(!fork())
-//        {
-//            execvp("vim",args);
-//        }
-//        wait(&status);
-//        char buf[4000];
-//        FILE* buffp=fopen("/home/song/Desktop/File System/buffile","r+b");
-//        if(buffp==NULL)
-//        {
-//            printf("Open File failed\n");
-//        }
-//        int readnum=fread(buf,sizeof(char),4000,buffp);
-//        printf("readnum=%d",readnum);
-//        fclose(buffp);
-        char buf[1000];
-        int num=scanf("%s",buf);
-        for(int i=0;i<strlen(buf);i++)
+        char* args[]={"vim","/home/song/Desktop/File System/buffile",NULL};
+        int status;
+        if(!fork())
         {
-           printf("%c",buf[i]);
+            execvp("vim",args);
         }
-        mywrite(fd,buf,strlen(buf));
+        wait(&status);
+        char buf[4000];
+        chararrayclear(buf,4000);
+        FILE* buffp=fopen("/home/song/Desktop/File System/buffile","r+b");
+        if(buffp==NULL)
+        {
+            printf("Open File failed\n");
+        }
+        int readnum=fread(buf,sizeof(char),4000,buffp);
+        printf("readnum=%d",readnum);
+        fclose(buffp);
+//        char buf[1000];
+//        int num=scanf("%s",buf);
+//        for(int i=0;i<strlen(buf);i++)
+//        {
+//           printf("%c",buf[i]);
+//        }
+        mywrite(fd,buf,readnum);
     }
     else
     {
@@ -624,37 +625,42 @@ int FuncVim(char*path)
         }
         printf("\n");
         int readnum=myread(fd,buf,u_ofile[fd]->ptrtoactiveinode->length);
-//        FILE* buffp=fopen("/home/song/Desktop/File System/buffile","wb");
-//        if(buffp==NULL)
-//        {
-//            printf("cannot open buffp");
-//            return 0;
-//        }
-//        int writenum=fwrite(buf,sizeof(char),readnum,buffp);
-//        fclose(buffp);
-//        buffp=fopen("/home/song/Desktop/File System/buffile","rb");
-//        char* args[]={"vim","/home/song/Desktop/File System/buffile",NULL};
-//        int status;
-//        if(!fork())
-//        {
-//            execvp("vim",args);
-//        }
-//        wait(&status);
-//        fclose(buffp);
+        FILE* buffp=fopen("/home/song/Desktop/File System/buffile","wb");
+        if(buffp==NULL)
+        {
+            printf("cannot open buffp");
+            return 0;
+        }
+        int writenum=fwrite(buf,sizeof(char),readnum,buffp);
+        fclose(buffp);
+        buffp=fopen("/home/song/Desktop/File System/buffile","rb");
+        char* args[]={"vim","/home/song/Desktop/File System/buffile",NULL};
+        int status;
+        if(!fork())
+        {
+            execvp("vim",args);
+        }
+        wait(&status);
+        fclose(buffp);
         for(int i=0;i<u_ofile[fd]->ptrtoactiveinode->length;i++)
         {
             printf("%c",buf[i]);
         }
         printf("\n");
-//        buffp=fopen("/home/song/Desktop/File System/buffile","r+b");
-//        if(buffp==NULL)
-//        {
-//            printf("Open File failed\n");
-//        }
-//        readnum=fread(buf,sizeof(char),4000,buffp);
-//        printf("readnum=%d",readnum);
-//        fclose(buffp);
-//        mywrite(fd,buf,readnum);
+        buffp=fopen("/home/song/Desktop/File System/buffile","r+b");
+        if(buffp==NULL)
+        {
+            printf("Open File failed\n");
+        }
+        for(int i=0;i<1000;i++)
+        {
+            buf[i]='\0';
+        }
+        printf("\n");
+        readnum=fread(buf,sizeof(char),1000,buffp);
+        printf("readnum=%d",readnum);
+        fclose(buffp);
+        mywrite(fd,buf,readnum);
     }
     myclose(fd);
     buffp=fopen("/home/song/Desktop/File System/buffile","w");
